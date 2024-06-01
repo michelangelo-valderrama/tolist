@@ -1,4 +1,5 @@
 import { Server } from 'http'
+import envs from './config/envs'
 import app from './app'
 
 async function bootServer(port: number): Promise<Server> {
@@ -13,4 +14,4 @@ async function bootServer(port: number): Promise<Server> {
 	})
 }
 
-void bootServer(3000)
+void bootServer(envs.PORT)
