@@ -2,12 +2,17 @@ import { Server } from 'http'
 import envs from './config/envs'
 import db from './init/db'
 import app from './app'
+import Logger from './utils/logger'
 
 async function bootServer(port: number): Promise<Server> {
 	try {
+		Logger.info(`Starting server in ${envs.MODE} mode...`)
+
+		Logger.info(`Connecting to database ${envs.DB_NAME}...`)
 		await db.connect()
+		Logger.success('Connected to database')
 	} catch (error) {
-		console.error('Unable to connect to the database:', error)
+		Logger.error(error, 'Failed to boot server')
 		return process.exit(1)
 	}
 
