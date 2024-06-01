@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
+import { Request } from 'express'
+import { ApiResponse } from '../../utils/api-response'
+import ApiError from '../../utils/error'
+import HTTP_STATUS from '../../constants/http-status'
 
-export async function getTasks(req: Request, res: Response) {
-	try {
-		return res.json({ message: 'getTasks' })
-	} catch (error) {
-		return res.status(500).json(error)
-	}
+export async function getTasks(_req: Request): Promise<ApiResponse> {
+	throw new ApiError(HTTP_STATUS.NOT_IMPLEMENTED, 'Not implemented')
+	return new ApiResponse('ok')
 }

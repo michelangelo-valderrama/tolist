@@ -17,7 +17,7 @@ async function connect(): Promise<void> {
 
 	for (let i = 0; i < 3; i++) {
 		try {
-			if (i > 0) Logger.warn('Retrying to connect to database')
+			if (i > 0) Logger.warn('Retrying to connect to database...')
 			await mongoose.connect(DB_URL, connectOptions)
 		} catch (error) {
 			if (i >= 2) {
