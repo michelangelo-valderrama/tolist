@@ -1,0 +1,15 @@
+name: todo-list
+services:
+  mongodb:
+    container_name: todo-list-db
+    image: mongo:7.0.11
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: '${DB_USERNAME}'
+      MONGO_INITDB_ROOT_PASSWORD: '${DB_PASSWORD}'
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:
