@@ -1,11 +1,11 @@
-import { Response } from 'express'
+import type { Response } from 'express'
 import HTTP_STATUS from '../constants/http-status'
 
 export class ApiResponse {
 	message: string
 	data: any
 	status: number
-	constructor(message?: string, data?: any, status = HTTP_STATUS.OK) {
+	constructor(message?: string, data?: any, status = HTTP_STATUS.OK_200) {
 		this.message = message ?? 'ok'
 		this.data = data ?? null
 		this.status = status

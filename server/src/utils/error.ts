@@ -3,13 +3,13 @@ import { isDev } from './misc'
 
 class ApiError extends Error {
 	status: number
-	id?: string
+	data?: any
 
-	constructor(status: number, message?: string, stack?: string, id?: string) {
+	constructor(status: number, message?: string, data?: any, stack?: string) {
 		super()
-		this.status = status ?? HTTP_STATUS.INTERNAL_SERVER_ERROR
+		this.status = status ?? HTTP_STATUS.INTERNAL_SERVER_ERROR_500
+		this.data = data ?? null
 		this.stack = stack
-		this.id = id
 
 		if (isDev()) {
 			this.message = stack ?? '' ? `${message}\nStack: ${stack}` : `${message}`

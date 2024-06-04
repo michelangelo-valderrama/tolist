@@ -18,7 +18,10 @@ async function connect(): Promise<void> {
 	for (let i = 0; i < 3; i++) {
 		try {
 			if (i > 0) Logger.warn('Retrying to connect to database...')
-			await mongoose.connect(DB_URL, connectOptions)
+			const data = await mongoose.connect(DB_URL, connectOptions)
+			if (data.connection.readyState === 1) {
+				break
+			}
 		} catch (error) {
 			if (i >= 2) {
 				Logger.error(error, 'Failed to connect to database')

@@ -1,4 +1,5 @@
-import type { Request, Response, NextFunction } from 'express'
+import type { Response, NextFunction } from 'express'
+import type { ApiTypes } from '../types/api-types'
 import HTTP_STATUS from '../constants/http-status'
 import { ApiResponse, handleApiResponse } from '../utils/api-response'
 import ApiError from '../utils/error'
@@ -7,17 +8,18 @@ import { isDev } from '../utils/misc'
 
 async function errorHandlingMiddleware(
 	error: Error,
-	_req: Request,
+	_req: ApiTypes.Request,
 	res: Response,
 	_next: NextFunction
 ): Promise<void> {
 	try {
 		const apiResponse = new ApiResponse()
-		apiResponse.status = HTTP_STATUS.INTERNAL_SERVER_ERROR
+		apiResponse.status = HTTP_STATUS.INTERNAL_SERVER_ERROR_500
 
 		// TODO: Database error handling
 		if (error instanceof ApiError) {
 			apiResponse.message = error.message
+			apiResponse.data = { error: error.data }
 			apiResponse.status = error.status
 		} else {
 			apiResponse.message = 'Something went wrong. Please try again later.'
@@ -36,7 +38,7 @@ async function errorHandlingMiddleware(
 		new ApiResponse(
 			'Something went wrong.',
 			undefined,
-			HTTP_STATUS.INTERNAL_SERVER_ERROR
+			HTTP_STATUS.INTERNAL_SERVER_ERROR_500
 		),
 		res
 	)
