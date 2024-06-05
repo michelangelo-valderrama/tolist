@@ -1,5 +1,5 @@
 import z from 'zod'
-import mongoose from 'mongoose'
+import { idSchema } from '../../schemas/db'
 
 export const Task = {
 	new: (entity: Record<string, any>) => {
@@ -19,7 +19,7 @@ const taskBaseSchema = z.object({
 })
 
 export const taskSchema = taskBaseSchema.extend({
-	id: z.instanceof(mongoose.Types.ObjectId),
+	id: idSchema,
 	done: z.boolean(),
 	updatedAt: z.date(),
 	createdAt: z.date()

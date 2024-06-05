@@ -36,7 +36,7 @@ type ValidationSchema = z.ZodObject<{
 /**
  * Validates the request body, query, params, and headers using the provided schema.
  */
-function validateRequest(validationSchema: ValidationSchema): RequestHandler {
+function validateReq(validationSchema: ValidationSchema): RequestHandler {
 	return async (req: ApiTypes.Request, _res: Response, next: NextFunction) => {
 		try {
 			await validationSchema.parseAsync(req)
@@ -59,4 +59,4 @@ function validateRequest(validationSchema: ValidationSchema): RequestHandler {
 	}
 }
 
-export { asyncHandler, validateRequest }
+export { asyncHandler, validateReq }
