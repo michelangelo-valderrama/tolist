@@ -4,8 +4,11 @@ const TaskSchema = new mongoose.Schema(
 	{
 		title: { type: String, required: true },
 		done: { type: Boolean, default: false },
-		content: String,
-		color_hex: String,
+		content: {
+			type: String,
+			default: ''
+		},
+		priority: Number,
 		project: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Project',

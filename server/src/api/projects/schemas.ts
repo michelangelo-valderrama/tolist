@@ -1,21 +1,11 @@
 import z from 'zod'
-import { idSchema } from '../../schemas/db'
-
-const hexColorSchema = z.custom<`#${string}`>((d) => {
-	return typeof d === 'string' ? /^#[0-9A-F]{6}$/i.test(d) : false
-}, "Invalid hex color format (e.g. '#FFFFFF')")
+import { idSchema, hexColorSchema } from '../../schemas/db'
 
 export const Project = {
 	new: (e: Record<string, any>) =>
 		projectSchema.parse({
 			id: e._id,
-			name: e.name,
-			description: e.description,
-			color_hex: e.color_hex,
-			picture_url: e.picture_url,
-			creator: e.creator,
-			updated_at: e.updated_at,
-			created_at: e.created_at
+			...e
 		})
 }
 
