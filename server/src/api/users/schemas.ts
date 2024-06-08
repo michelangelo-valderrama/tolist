@@ -9,6 +9,7 @@ export const User = {
 			name: entity.name,
 			email: entity.email,
 			hashedPassword: entity.hashedPassword,
+			secret: entity.secret,
 			createdAt: entity.createdAt,
 			updatedAt: entity.updatedAt
 		}
@@ -43,7 +44,8 @@ export const userSchema = userBaseSchema.extend({
 	id: idSchema,
 	hashedPassword: z.string(),
 	updatedAt: z.date(),
-	createdAt: z.date()
+	createdAt: z.date(),
+	secret: z.string().optional()
 })
 
 export const userCreateSchema = userBaseSchema.extend({

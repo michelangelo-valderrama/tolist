@@ -44,3 +44,20 @@ export async function findByEmail(email: string): Promise<User> {
 	}
 	return User.new(user)
 }
+
+export async function updateSecret(
+	userId: string,
+	secret: string
+): Promise<User> {
+	const user = await UserModel.findByIdAndUpdate(
+		userId,
+		{ secret },
+		{ new: true }
+	)
+		.lean()
+		.exec()
+	if (!user) {
+		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'User not found')
+	}
+	return User.new(user)
+}

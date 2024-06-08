@@ -7,7 +7,7 @@ import HTTP_STATUS from '../constants/http-status'
 
 type AsyncHandler = (
 	req: ApiTypes.Request,
-	res?: Response
+	res: Response
 ) => Promise<ApiResponse>
 
 /**
