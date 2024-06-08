@@ -15,7 +15,10 @@ import { User } from './schemas'
 import * as usersService from './service'
 
 export async function singup(req: ApiTypes.Request): Promise<ApiResponse> {
-	// TODO: check if user name or email already exists
+	const { name, email } = req.body
+
+	await usersService.userExists(name, email)
+
 	const user = await usersService.addUser(req.body)
 	return new ApiResponse(
 		'User created successfully',

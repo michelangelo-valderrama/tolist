@@ -28,6 +28,10 @@ const HTTP_STATUS = {
 	 */
 	NOT_FOUND_404: 404,
 	/**
+	 * The request could not be completed due to a conflict with the current state of the resource.
+	 */
+	CONFLICT_409: 409,
+	/**
 	 * The method specified in the Request-Line is not allowed for the resource identified by the Request-URI.
 	 */
 	UNPROCESSABLE_ENTITY_422: 422,
