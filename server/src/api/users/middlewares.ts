@@ -17,7 +17,7 @@ export function verifyCredentials(): RequestHandler {
 			return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Incorrect email'))
 		}
 
-		const validPassword = comparePassword(password, user.hashedPassword)
+		const validPassword = comparePassword(password, user.hashed_password)
 		if (!validPassword) {
 			return next(
 				new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Incorrect password')

@@ -11,7 +11,7 @@ import {
 	verifyRefreshToken
 } from '../../utils/auth'
 import ApiError from '../../utils/error'
-import { User } from './schemas'
+import { User, UserCreatePublic } from './schemas'
 import * as usersService from './service'
 
 export async function singup(req: ApiTypes.Request): Promise<ApiResponse> {
@@ -19,7 +19,9 @@ export async function singup(req: ApiTypes.Request): Promise<ApiResponse> {
 
 	await usersService.userExists(name, email)
 
-	const user = await usersService.addUser(req.body)
+	const userCreatePublic: UserCreatePublic = req.body
+	const userCreate = User.create(userCreatePublic)
+	const user = await usersService.addUser(userCreate)
 	return new ApiResponse(
 		'User created successfully',
 		User.public(user),

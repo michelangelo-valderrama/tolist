@@ -3,36 +3,30 @@ import { idSchema } from '../../schemas/db'
 import { hashPassword } from '../../utils/auth'
 
 export const User = {
-	new: (entity: Record<string, any>) => {
-		const candidate = {
-			id: entity._id,
-			name: entity.name,
-			email: entity.email,
-			hashedPassword: entity.hashedPassword,
-			secret: entity.secret,
-			createdAt: entity.createdAt,
-			updatedAt: entity.updatedAt
-		}
-		return userSchema.parse(candidate)
-	},
-	public: (entity: Record<string, any>) => {
-		const candidate = {
-			id: entity._id ?? entity.id,
-			name: entity.name,
-			email: entity.email,
-			createdAt: entity.createdAt,
-			updatedAt: entity.updatedAt
-		}
-		return userPublicSchema.parse(candidate)
-	},
-	create: (entity: UserCreatePublic) => {
-		const candidate = {
-			name: entity.name,
-			email: entity.email,
-			hashedPassword: hashPassword(entity.password)
-		}
-		return userCreateSchema.parse(candidate)
-	}
+	new: (e: Record<string, any>) =>
+		userSchema.parse({
+			id: e._id,
+			name: e.name,
+			email: e.email,
+			hashed_password: e.hashed_password,
+			secret: e.secret,
+			created_at: e.created_at,
+			updated_at: e.updated_at
+		}),
+	public: (e: Record<string, any>) =>
+		userPublicSchema.parse({
+			id: e._id ?? e.id,
+			name: e.name,
+			email: e.email,
+			created_at: e.created_at,
+			updated_at: e.updated_at
+		}),
+	create: (e: UserCreatePublic) =>
+		userCreateSchema.parse({
+			name: e.name,
+			email: e.email,
+			hashed_password: hashPassword(e.password)
+		})
 }
 
 const userBaseSchema = z.object({
@@ -42,14 +36,14 @@ const userBaseSchema = z.object({
 
 export const userSchema = userBaseSchema.extend({
 	id: idSchema,
-	hashedPassword: z.string(),
-	updatedAt: z.date(),
-	createdAt: z.date(),
-	secret: z.string().optional()
+	hashed_password: z.string(),
+	secret: z.string().optional(),
+	updated_at: z.date(),
+	created_at: z.date()
 })
 
 export const userCreateSchema = userBaseSchema.extend({
-	hashedPassword: z.string()
+	hashed_password: z.string()
 })
 
 export const userCreatePublicSchema = userBaseSchema.extend({
@@ -58,8 +52,8 @@ export const userCreatePublicSchema = userBaseSchema.extend({
 
 export const userPublicSchema = userBaseSchema.extend({
 	id: idSchema,
-	updatedAt: z.date(),
-	createdAt: z.date()
+	updated_at: z.date(),
+	created_at: z.date()
 })
 
 export const userLoginSchema = z.object({

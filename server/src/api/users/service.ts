@@ -1,7 +1,7 @@
 import HTTP_STATUS from '../../constants/http-status'
 import ApiError from '../../utils/error'
 import UserModel from './model'
-import { type UserCreatePublic, User } from './schemas'
+import { type UserCreatePublic, User, UserCreate } from './schemas'
 
 export async function getUser(
 	userId: string,
@@ -16,10 +16,7 @@ export async function getUser(
 	return User.new(user)
 }
 
-export async function addUser(
-	userCreatePublic: UserCreatePublic
-): Promise<User> {
-	const userCreate = User.create(userCreatePublic)
+export async function addUser(userCreate: UserCreate): Promise<User> {
 	return User.new(await UserModel.create(userCreate))
 }
 

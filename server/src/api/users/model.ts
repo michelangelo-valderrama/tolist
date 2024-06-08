@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema(
 			required: true,
 			unique: true
 		},
-		hashedPassword: {
+		hashed_password: {
 			type: String,
 			required: true
 		},
@@ -21,7 +21,10 @@ const UserSchema = new mongoose.Schema(
 		}
 	},
 	{
-		timestamps: true
+		timestamps: {
+			createdAt: 'created_at',
+			updatedAt: 'updated_at'
+		}
 	}
 )
 
