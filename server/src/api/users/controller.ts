@@ -20,7 +20,9 @@ export async function singup(req: ApiTypes.Request): Promise<ApiResponse> {
 	await usersService.userExists(name, email)
 
 	const userCreatePublic: UserCreatePublic = req.body
+	console.log('userCreatePublic', userCreatePublic)
 	const userCreate = User.create(userCreatePublic)
+	console.log('userCreate', userCreate)
 	const user = await usersService.addUser(userCreate)
 	return new ApiResponse(
 		'User created successfully',

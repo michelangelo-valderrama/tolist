@@ -30,15 +30,6 @@ export async function updateTask(
 	return Task.new(task)
 }
 
-export async function toggleTaskDone(taskId: string): Promise<Task> {
-	const task = await TaskModel.findById(taskId)
-	if (!task) {
-		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Task not found')
-	}
-	task.done = !task.done
-	return Task.new(await task.save())
-}
-
 export async function deleteTask(taskId: string): Promise<void> {
 	const task = await TaskModel.findByIdAndDelete(taskId).lean().exec()
 	if (!task) {

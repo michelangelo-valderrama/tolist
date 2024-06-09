@@ -1,5 +1,6 @@
 import type { Application } from 'express'
 import projects from './projects/routes'
+import contexts from './contexts/routes'
 import tasks from './tasks/routes'
 import users from './users/routes'
 import { asyncHandler } from '../middlewares/api-utils'
@@ -9,6 +10,7 @@ const BASE_API_PATH = ''
 const APP_START_TIME = Date.now()
 const API_ROUTE_MAP = {
 	'/projects': projects,
+	'/contexts': contexts,
 	'/tasks': tasks,
 	'/users': users
 }

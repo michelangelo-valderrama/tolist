@@ -1,10 +1,10 @@
-import HTTP_STATUS from '../../constants/http-status'
 import type { ApiTypes } from '../../types/api-types'
+import HTTP_STATUS from '../../constants/http-status'
 import { ApiResponse } from '../../utils/api-response'
 import ApiError from '../../utils/error'
 import * as projectsService from '../projects/service'
-import { TaskCreate, TaskCreatePublic, TaskUpdate } from './schemas'
 import * as tasksService from './service'
+import { TaskCreate, TaskCreatePublic, TaskUpdate } from './schemas'
 
 export async function getTask(req: ApiTypes.Request): Promise<ApiResponse> {
 	const taskId = req.params.taskId
@@ -38,15 +38,6 @@ export async function addTask(req: ApiTypes.Request): Promise<ApiResponse> {
 
 	const task = await tasksService.addTask(taskCreate)
 	return new ApiResponse('Task added', task, HTTP_STATUS.CREATED_201)
-}
-
-export async function toggleTaskDone(
-	req: ApiTypes.Request
-): Promise<ApiResponse> {
-	const taskId = req.params.taskId
-
-	const task = await tasksService.toggleTaskDone(taskId)
-	return new ApiResponse('Task updated', task)
 }
 
 export async function updateTask(req: ApiTypes.Request): Promise<ApiResponse> {

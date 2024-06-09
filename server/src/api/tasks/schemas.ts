@@ -5,7 +5,15 @@ export const Task = {
 	new: (e: Record<string, any>) =>
 		taskSchema.parse({
 			id: e._id,
-			...e
+			title: e.title,
+			content: e.content,
+			priority: e.priority,
+			project: e.project,
+			creator: e.creator,
+			contexts: e.contexts,
+			done: e.done,
+			updated_at: e.updated_at,
+			created_at: e.created_at
 		})
 }
 
@@ -14,7 +22,8 @@ const taskBaseSchema = z.object({
 	content: z.string().nullish(),
 	priority: z.number().int().min(0).max(25).nullish(),
 	project: idSchema,
-	creator: idSchema
+	creator: idSchema,
+	contexts: z.array(idSchema).nullish()
 })
 
 export const taskSchema = taskBaseSchema.extend({

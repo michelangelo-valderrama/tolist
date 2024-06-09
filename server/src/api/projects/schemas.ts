@@ -1,12 +1,16 @@
 import z from 'zod'
 import { idSchema, hexColorSchema } from '../../schemas/db'
-import { taskSchema } from '../tasks/schemas'
 
 export const Project = {
 	new: (e: Record<string, any>) =>
 		projectSchema.parse({
 			id: e._id,
-			...e
+			name: e.name,
+			description: e.description,
+			color_hex: e.color_hex,
+			picture_url: e.picture_url,
+			creator: e.creator,
+			created_at: e.created_at
 		})
 }
 
@@ -20,7 +24,6 @@ const projectBaseSchema = z.object({
 export const projectSchema = projectBaseSchema.extend({
 	id: idSchema,
 	creator: idSchema,
-	updated_at: z.date(),
 	created_at: z.date()
 })
 

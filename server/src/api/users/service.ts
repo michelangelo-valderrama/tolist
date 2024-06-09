@@ -1,7 +1,7 @@
 import HTTP_STATUS from '../../constants/http-status'
 import ApiError from '../../utils/error'
 import UserModel from './model'
-import { type UserCreatePublic, User, UserCreate } from './schemas'
+import { User, UserCreate } from './schemas'
 
 export async function getUser(
 	userId: string,
@@ -17,7 +17,8 @@ export async function getUser(
 }
 
 export async function addUser(userCreate: UserCreate): Promise<User> {
-	return User.new(await UserModel.create(userCreate))
+	const user = await UserModel.create(userCreate)
+	return User.new(user)
 }
 
 export async function findByName(name: string): Promise<User> {
@@ -48,18 +49,18 @@ export async function findByEmail(email: string): Promise<User> {
 }
 
 export async function userExists(name: string, email: string): Promise<void> {
-	const emailExists = await UserModel.findOne({ email }).countDocuments().exec()
-	if (emailExists) {
-		throw new ApiError(
-			HTTP_STATUS.CONFLICT_409,
-			`User email '${email}' already exists`
-		)
-	}
 	const nameExists = await UserModel.findOne({ name }).countDocuments().exec()
 	if (nameExists) {
 		throw new ApiError(
 			HTTP_STATUS.CONFLICT_409,
 			`User name '${name}' already exists`
+		)
+	}
+	const emailExists = await UserModel.findOne({ email }).countDocuments().exec()
+	if (emailExists) {
+		throw new ApiError(
+			HTTP_STATUS.CONFLICT_409,
+			`User email '${email}' already exists`
 		)
 	}
 }
