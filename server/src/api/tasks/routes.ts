@@ -11,6 +11,7 @@ const router = Router()
 router.use(authenticateReq())
 
 router.get('/', asyncHandler(tasksController.findByCreator))
+router.get('/:taskId', asyncHandler(tasksController.getTask))
 router.post(
 	'/',
 	validateReq(

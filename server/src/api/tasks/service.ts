@@ -45,3 +45,19 @@ export async function deleteTask(taskId: string): Promise<void> {
 		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Task not found')
 	}
 }
+
+export async function getTask(taskId: string): Promise<Task> {
+	const task = await TaskModel.findById(taskId).lean().exec()
+	if (!task) {
+		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Task not found')
+	}
+	return Task.new(task)
+}
+
+export async function findByProject(projectId: string): Promise<Task[]> {
+	const tasks = await TaskModel.find({ project: projectId })
+		.sort({ created_at: -1 })
+		.lean()
+		.exec()
+	return tasks.map(Task.new)
+}

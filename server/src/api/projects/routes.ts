@@ -11,6 +11,24 @@ const router = Router()
 router.use(authenticateReq())
 
 router.get('/', asyncHandler(projectController.findByCreator))
+router.get(
+	'/:projectId',
+	validateReq(
+		z.object({
+			params: z.object({ projectId: idSchema })
+		})
+	),
+	asyncHandler(projectController.getProject)
+)
+router.get(
+	'/:projectId/tasks',
+	validateReq(
+		z.object({
+			params: z.object({ projectId: idSchema })
+		})
+	),
+	asyncHandler(projectController.getProjectTasks)
+)
 router.post(
 	'/',
 	validateReq(

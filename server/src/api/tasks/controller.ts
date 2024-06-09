@@ -6,6 +6,13 @@ import * as projectsService from '../projects/service'
 import { TaskCreate, TaskCreatePublic, TaskUpdate } from './schemas'
 import * as tasksService from './service'
 
+export async function getTask(req: ApiTypes.Request): Promise<ApiResponse> {
+	const taskId = req.params.taskId
+
+	const task = await tasksService.getTask(taskId)
+	return new ApiResponse('Task retreived', task)
+}
+
 export async function findByCreator(
 	req: ApiTypes.Request
 ): Promise<ApiResponse> {

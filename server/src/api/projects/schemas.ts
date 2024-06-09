@@ -1,5 +1,6 @@
 import z from 'zod'
 import { idSchema, hexColorSchema } from '../../schemas/db'
+import { taskSchema } from '../tasks/schemas'
 
 export const Project = {
 	new: (e: Record<string, any>) =>

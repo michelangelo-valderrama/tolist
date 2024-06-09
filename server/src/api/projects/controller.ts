@@ -1,11 +1,12 @@
 import HTTP_STATUS from '../../constants/http-status'
 import { ApiTypes } from '../../types/api-types'
 import { ApiResponse } from '../../utils/api-response'
+import * as tasksService from '../tasks/service'
 import { ProjectCreate, ProjectCreatePublic, ProjectUpdate } from './schemas'
 import * as projectsService from './service'
 
 export async function addProject(req: ApiTypes.Request): Promise<ApiResponse> {
-	const userId: string = req.ctx!.decodedToken.user_id
+	const userId = req.ctx!.decodedToken.user_id
 
 	const projectCreatePublic: ProjectCreatePublic = req.body
 	const projectCreate: ProjectCreate = {
@@ -22,7 +23,7 @@ export async function addProject(req: ApiTypes.Request): Promise<ApiResponse> {
 export async function findByCreator(
 	req: ApiTypes.Request
 ): Promise<ApiResponse> {
-	const userId: string = req.ctx!.decodedToken.user_id
+	const userId = req.ctx!.decodedToken.user_id
 
 	const projects = await projectsService.findByCreator(userId)
 	return new ApiResponse('Projects retreived', projects)
@@ -40,9 +41,9 @@ export async function deleteProject(
 export async function updateProject(
 	req: ApiTypes.Request
 ): Promise<ApiResponse> {
-	const userId: string = req.ctx!.decodedToken.user_id
+	const userId = req.ctx!.decodedToken.user_id
 
-	const projectId: string = req.params.projectId
+	const projectId = req.params.projectId
 	const projectUpdate: ProjectUpdate = req.body
 
 	const project = await projectsService.getProject(projectId)
@@ -56,4 +57,20 @@ export async function updateProject(
 		projectUpdate
 	)
 	return new ApiResponse('Project updated', newProject)
+}
+
+export async function getProject(req: ApiTypes.Request): Promise<ApiResponse> {
+	const projectId = req.params.projectId
+
+	const project = await projectsService.getProject(projectId)
+	return new ApiResponse('Project retreived', project)
+}
+
+export async function getProjectTasks(
+	req: ApiTypes.Request
+): Promise<ApiResponse> {
+	const projectId = req.params.projectId
+
+	const tasks = await tasksService.findByProject(projectId)
+	return new ApiResponse('Project tasks retreived', tasks)
 }

@@ -9,10 +9,10 @@ export async function addProject(project: ProjectCreate): Promise<Project> {
 }
 
 export async function getProject(projectId: string): Promise<Project> {
-	const projectDoc = await ProjectModel.findById(projectId).lean().exec()
-	if (!projectDoc)
+	const project = await ProjectModel.findById(projectId).lean().exec()
+	if (!project)
 		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Project not found')
-	return Project.new(projectDoc)
+	return Project.new(project)
 }
 
 export async function findByCreator(creatorId: string): Promise<Project[]> {
