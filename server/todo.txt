@@ -1,0 +1,7 @@
+x (A) Borrado en cascada para los proyectos y sus tareas asociadas @projects @tasks
+
+(C) Mostrar los contextos de las tareas @tasks
+
+(C) Comprobar que los contextos no se repitan por tarea @contexts
+
+(C) Al crear un usuario, crear un projecto is_inbox_project @users @projects

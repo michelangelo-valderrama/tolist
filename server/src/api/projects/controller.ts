@@ -34,7 +34,11 @@ export async function deleteProject(
 ): Promise<ApiResponse> {
 	const projectId: string = req.params.projectId
 
-	const project = await projectsService.deleteProject(projectId)
+	const projectPromise = projectsService.deleteProject(projectId)
+	const tasksPromise = tasksService.deleteByProject(projectId)
+
+	const [project] = await Promise.all([projectPromise, tasksPromise])
+
 	return new ApiResponse('Project deleted', project)
 }
 

@@ -37,6 +37,10 @@ export async function deleteTask(taskId: string): Promise<void> {
 	}
 }
 
+export async function deleteByProject(projectId: string): Promise<void> {
+	await TaskModel.deleteMany({ project: projectId }).exec()
+}
+
 export async function getTask(taskId: string): Promise<Task> {
 	const task = await TaskModel.findById(taskId).lean().exec()
 	if (!task) {
