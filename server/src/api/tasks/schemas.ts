@@ -18,12 +18,12 @@ export const Task = {
 }
 
 const taskBaseSchema = z.object({
-	title: z.string(),
-	content: z.string().nullish(),
+	title: z.string().min(3).max(50),
+	content: z.string().max(10000).nullish(),
 	priority: z.number().int().min(0).max(25).nullish(),
 	project: idSchema,
 	creator: idSchema,
-	contexts: z.array(idSchema).nullish()
+	contexts: z.array(z.string()).max(5)
 })
 
 export const taskSchema = taskBaseSchema.extend({
@@ -33,9 +33,15 @@ export const taskSchema = taskBaseSchema.extend({
 	created_at: z.date()
 })
 
-export const taskCreateSchema = taskBaseSchema
+export const taskCreateSchema = taskBaseSchema.extend({
+	contexts: z
+		.array(z.string())
+		.max(5)
+		.nullish()
+		.transform((arr) => Array.from(new Set(arr)))
+})
 
-export const taskCreatePublicSchema = taskBaseSchema.omit({ creator: true })
+export const taskCreatePublicSchema = taskCreateSchema.omit({ creator: true })
 
 export const taskUpdateSchema = taskCreatePublicSchema
 	.extend({

@@ -1,10 +1,9 @@
 import z from 'zod'
-import { idSchema, hexColorSchema } from '../../schemas/db'
+import { idSchema, hexColorSchema, alphabetSchema } from '../../schemas/db'
 
 export const Context = {
 	new: (e: Record<string, any>) =>
 		contextSchema.parse({
-			id: e._id,
 			name: e.name,
 			description: e.description,
 			color_hex: e.color_hex,
@@ -14,14 +13,13 @@ export const Context = {
 }
 
 const contextBaseSchema = z.object({
-	name: z.string(),
-	description: z.string().nullish(),
+	name: alphabetSchema.min(1).max(10),
+	description: z.string().min(3).max(100).nullish(),
 	color_hex: hexColorSchema.nullish(),
 	creator: idSchema
 })
 
 export const contextSchema = contextBaseSchema.extend({
-	id: idSchema,
 	created_at: z.date()
 })
 

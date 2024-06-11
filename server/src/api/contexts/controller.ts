@@ -27,8 +27,8 @@ export async function findByCreator(
 }
 
 export async function getContext(req: ApiTypes.Request): Promise<ApiResponse> {
-	const contextId = req.params.contextId
+	const contextName = req.params.contextName
 
-	const context = await contextsService.getContext(contextId)
+	const context = await contextsService.getContext(contextName)
 	return new ApiResponse('Context retreived', context)
 }

@@ -1,5 +1,7 @@
 import ContextModel from './model'
 import { Context, ContextCreate } from '../contexts/schemas'
+import ApiError from '../../utils/error'
+import HTTP_STATUS from '../../constants/http-status'
 
 export async function addContext(
 	contextCreate: ContextCreate
@@ -8,10 +10,12 @@ export async function addContext(
 	return Context.new(context)
 }
 
-export async function getContext(contextId: string): Promise<Context> {
-	const context = await ContextModel.findById(contextId)
+export async function getContext(contextName: string): Promise<Context> {
+	const context = await ContextModel.findOne({ name: contextName })
+		.lean()
+		.exec()
 	if (!context) {
-		throw new Error('Context not found')
+		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Context not found')
 	}
 	return Context.new(context)
 }
@@ -19,4 +23,18 @@ export async function getContext(contextId: string): Promise<Context> {
 export async function findByCreator(creatorId: string): Promise<Context[]> {
 	const contexts = await ContextModel.find({ creator: creatorId }).lean().exec()
 	return contexts.map(Context.new)
+}
+
+export async function findByNames(contextNames: string[]): Promise<Context[]> {
+	const contexts = await ContextModel.find({ name: { $in: contextNames } })
+		.lean()
+		.exec()
+	return contexts.map(Context.new)
+}
+
+export async function contextExists(contextName: string): Promise<boolean> {
+	const context = await ContextModel.findOne({ name: contextName })
+		.lean()
+		.exec()
+	return !!context
 }

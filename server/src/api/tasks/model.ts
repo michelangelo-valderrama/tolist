@@ -19,12 +19,7 @@ const TaskSchema = new mongoose.Schema(
 			ref: 'User',
 			required: true
 		},
-		contexts: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Context'
-			}
-		]
+		contexts: [String]
 	},
 	{
 		timestamps: {

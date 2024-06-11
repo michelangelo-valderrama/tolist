@@ -1,9 +1,20 @@
 import HTTP_STATUS from '../../constants/http-status'
 import ApiError from '../../utils/error'
+import * as contextsService from '../contexts/service'
 import TaskModel from './model'
 import { Task, TaskCreate, TaskUpdate } from './schemas'
 
 export async function addTask(taskCreate: TaskCreate): Promise<Task> {
+	if (taskCreate.contexts) {
+		for (const context of taskCreate.contexts) {
+			if (!(await contextsService.contextExists(context))) {
+				throw new ApiError(
+					HTTP_STATUS.BAD_REQUEST_400,
+					`Context ${context} does not exist`
+				)
+			}
+		}
+	}
 	return Task.new(await TaskModel.create(taskCreate))
 }
 
@@ -19,6 +30,16 @@ export async function updateTask(
 	taskId: string,
 	taskUpdate: TaskUpdate
 ): Promise<Task> {
+	if (taskUpdate.contexts) {
+		for (const context of taskUpdate.contexts) {
+			if (!(await contextsService.contextExists(context))) {
+				throw new ApiError(
+					HTTP_STATUS.BAD_REQUEST_400,
+					`Context ${context} does not exist`
+				)
+			}
+		}
+	}
 	const task = await TaskModel.findByIdAndUpdate(taskId, taskUpdate, {
 		new: true
 	})
