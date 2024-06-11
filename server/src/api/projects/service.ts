@@ -58,3 +58,12 @@ export async function updateProject(
 		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Project not found')
 	return Project.new(project)
 }
+
+export async function addInboxProject(creatorId: string): Promise<Project> {
+	const project = await ProjectModel.create({
+		is_inbox_project: true,
+		creator: creatorId,
+		name: 'Inbox'
+	})
+	return Project.new(project)
+}

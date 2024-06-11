@@ -1,5 +1,6 @@
 import HTTP_STATUS from '../../constants/http-status'
 import ApiError from '../../utils/error'
+import * as projectsService from '../projects/service'
 import UserModel from './model'
 import { User, UserCreate } from './schemas'
 
@@ -18,6 +19,7 @@ export async function getUser(
 
 export async function addUser(userCreate: UserCreate): Promise<User> {
 	const user = await UserModel.create(userCreate)
+	projectsService.addInboxProject(`${user._id}`)
 	return User.new(user)
 }
 

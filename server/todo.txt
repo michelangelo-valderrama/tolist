@@ -8,4 +8,4 @@ x (A) Al añadir y actualizar contextos, validar que existen @tasks @contexts
 
 x (A) Comprobar que los contextos no se repitan por tarea @contexts
 
-(C) Al crear un usuario, crear un projecto is_inbox_project @users @projects
+(A) Al crear un usuario, crear un projecto is_inbox_project @users @projects

@@ -8,6 +8,7 @@
 		"gen-secret": "openssl rand -hex 32",
 		"db:up": "docker compose up -d",
 		"db:down": "docker compose down",
+		"db:clear": "docker exec -it $DB_NAME mongosh -u $DB_USERNAME -p $DB_PASSWORD --eval 'use $DB_NAME; db.dropDatabase()'",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
