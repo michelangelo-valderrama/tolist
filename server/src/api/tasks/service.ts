@@ -51,6 +51,15 @@ export async function updateTask(
 	return Task.new(task)
 }
 
+export async function deleteContextFromTasks(
+	contextName: string
+): Promise<void> {
+	await TaskModel.updateMany(
+		{ contexts: contextName },
+		{ $pull: { contexts: contextName } }
+	).exec()
+}
+
 export async function deleteTask(taskId: string): Promise<void> {
 	const task = await TaskModel.findByIdAndDelete(taskId).lean().exec()
 	if (!task) {

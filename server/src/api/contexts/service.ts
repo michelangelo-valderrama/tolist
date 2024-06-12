@@ -1,7 +1,8 @@
-import ContextModel from './model'
 import { Context, ContextCreate } from '../contexts/schemas'
 import ApiError from '../../utils/error'
 import HTTP_STATUS from '../../constants/http-status'
+import * as tasksService from '../tasks/service'
+import ContextModel from './model'
 
 export async function addContext(
 	contextCreate: ContextCreate
@@ -37,4 +38,17 @@ export async function contextExists(contextName: string): Promise<boolean> {
 		.lean()
 		.exec()
 	return !!context
+}
+
+export async function deleteContext(contextName: string): Promise<void> {
+	const context = await ContextModel.findOne({
+		name: contextName
+	}).exec()
+	if (!context) {
+		throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Context not found')
+	}
+	await Promise.all([
+		tasksService.deleteContextFromTasks(contextName),
+		context.deleteOne().exec()
+	])
 }

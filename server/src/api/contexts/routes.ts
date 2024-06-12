@@ -30,5 +30,16 @@ router.post(
 	),
 	asyncHandler(contextsController.addContext)
 )
+router.delete(
+	'/:contextName',
+	validateReq(
+		z.object({
+			params: z.object({
+				contextName: z.string().min(1).max(10)
+			})
+		})
+	),
+	asyncHandler(contextsController.deleteContext)
+)
 
 export default router

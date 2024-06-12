@@ -4,8 +4,8 @@ x (A) Los nombres de los contextos son únicos y sirven de id @contexts
 
 x (A) Al añadir y actualizar contextos, validar que existen @tasks @contexts
 
-(C) Al borrar un contexto, se elimina de las tareas asociadas @contexts @tasks
+x (A) Al borrar un contexto, se elimina de las tareas asociadas @contexts @tasks
 
 x (A) Comprobar que los contextos no se repitan por tarea @contexts
 
-(A) Al crear un usuario, crear un projecto is_inbox_project @users @projects
+x (A) Al crear un usuario, crear un projecto is_inbox_project @users @projects

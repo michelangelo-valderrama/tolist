@@ -32,3 +32,12 @@ export async function getContext(req: ApiTypes.Request): Promise<ApiResponse> {
 	const context = await contextsService.getContext(contextName)
 	return new ApiResponse('Context retreived', context)
 }
+
+export async function deleteContext(
+	req: ApiTypes.Request
+): Promise<ApiResponse> {
+	const contextName = req.params.contextName
+
+	await contextsService.deleteContext(contextName)
+	return new ApiResponse('Context deleted')
+}
