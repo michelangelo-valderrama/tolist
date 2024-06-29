@@ -1,39 +1,41 @@
 {
-	"name": "server",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"start:dev": "ts-node-dev --transpile-only --inspect -- ./src/server.ts",
-		"gen-secret": "openssl rand -hex 32",
-		"db:up": "docker compose up -d",
-		"db:down": "docker compose down",
-		"db:clear": "docker exec -it $DB_NAME mongosh -u $DB_USERNAME -p $DB_PASSWORD --eval 'use $DB_NAME; db.dropDatabase()'",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"bcrypt": "^5.1.1",
-		"cookie-parser": "^1.4.6",
-		"dotenv": "^16.4.5",
-		"env-var": "^7.5.0",
-		"express": "^4.19.2",
-		"helmet": "^7.1.0",
-		"jsonwebtoken": "^9.0.2",
-		"mongoose": "^8.4.1",
-		"pino": "^9.1.0",
-		"pino-pretty": "^11.1.0",
-		"zod": "^3.23.8"
-	},
-	"devDependencies": {
-		"@types/bcrypt": "^5.0.2",
-		"@types/cookie-parser": "^1.4.7",
-		"@types/express": "^4.17.21",
-		"@types/jsonwebtoken": "^9.0.6",
-		"@types/node": "^20.13.0",
-		"ts-node-dev": "^2.0.0",
-		"typescript": "^5.4.5"
-	}
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "ts-node-dev --transpile-only --inspect -- ./src/server.ts",
+    "gen-secret": "openssl rand -hex 32",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:clear": "docker exec -it $DB_NAME mongosh -u $DB_USERNAME -p $DB_PASSWORD --eval 'use $DB_NAME; db.dropDatabase()'",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "env-var": "^7.5.0",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1",
+    "pino": "^9.1.0",
+    "pino-pretty": "^11.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.13.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
 }
