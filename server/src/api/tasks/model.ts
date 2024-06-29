@@ -19,7 +19,12 @@ const TaskSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
-    tags: [String]
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tag'
+      }
+    ]
   },
   {
     timestamps: {

@@ -27,16 +27,15 @@ export async function findByCreator(
 }
 
 export async function getTag(req: ApiTypes.Request): Promise<ApiResponse> {
-  const name = req.params.name
-  console.log('name:', name)
+  const tagId = req.params.tagId
 
-  const tag = await tagsService.getTag(name)
+  const tag = await tagsService.getTag(tagId)
   return new ApiResponse('Tag retreived', tag)
 }
 
 export async function deleteTag(req: ApiTypes.Request): Promise<ApiResponse> {
-  const name = req.params.name
+  const tagId = req.params.tagId
 
-  await tagsService.deleteTag(name)
+  await tagsService.deleteTag(tagId)
   return new ApiResponse('Tag deleted')
 }

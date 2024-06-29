@@ -1,5 +1,6 @@
 import z from 'zod'
 import { idSchema } from '../../schemas/db'
+import { Tag } from '../tags/schemas'
 
 export const Task = {
   new: (e: Record<string, any>) =>
@@ -10,7 +11,7 @@ export const Task = {
       priority: e.priority,
       project: e.project,
       creator: e.creator,
-      tags: e.tags,
+      tags: e.tags ?? [],
       done: e.done,
       updated_at: e.updated_at,
       created_at: e.created_at
@@ -23,23 +24,18 @@ const taskBaseSchema = z.object({
   priority: z.number().int().min(0).max(25).nullish(),
   project: idSchema,
   creator: idSchema,
-  tags: z.array(z.string()).max(5)
+  tags: z.array(idSchema).max(20)
 })
 
 export const taskSchema = taskBaseSchema.extend({
   id: idSchema,
   done: z.boolean(),
   updated_at: z.date(),
-  created_at: z.date()
+  created_at: z.date(),
+  tags: z.array(z.any()).transform((tags) => tags.map((t) => Tag.new(t)))
 })
 
-export const taskCreateSchema = taskBaseSchema.extend({
-  tags: z
-    .array(z.string())
-    .max(5)
-    .nullish()
-    .transform((arr) => Array.from(new Set(arr)))
-})
+export const taskCreateSchema = taskBaseSchema
 
 export const taskCreatePublicSchema = taskCreateSchema.omit({ creator: true })
 

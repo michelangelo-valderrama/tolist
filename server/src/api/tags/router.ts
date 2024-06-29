@@ -4,6 +4,7 @@ import { authenticateReq } from '../../middlewares/auth'
 import { asyncHandler, validateReq } from '../../middlewares/api-utils'
 import * as tagsController from './controller'
 import * as tagsSchemas from './schemas'
+import { idSchema } from '../../schemas/db'
 
 const router = Router()
 
@@ -11,10 +12,10 @@ router.use(authenticateReq())
 
 router.get('/', asyncHandler(tagsController.findByCreator))
 router.get(
-  '/:name',
+  '/:tagId',
   validateReq(
     z.object({
-      params: tagsSchemas.tagSchema.pick({ name: true })
+      params: z.object({ tagId: idSchema })
     })
   ),
   asyncHandler(tagsController.getTag)
@@ -29,10 +30,10 @@ router.post(
   asyncHandler(tagsController.addTask)
 )
 router.delete(
-  '/:name',
+  '/:tagId',
   validateReq(
     z.object({
-      params: tagsSchemas.tagSchema.pick({ name: true })
+      params: z.object({ tagId: idSchema })
     })
   ),
   asyncHandler(tagsController.deleteTag)

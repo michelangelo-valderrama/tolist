@@ -4,6 +4,7 @@ import { idSchema, hexColorSchema, alphabetSchema } from '../../schemas/db'
 export const Tag = {
   new: (e: Record<string, any>) =>
     tagSchema.parse({
+      id: e._id,
       name: e.name,
       description: e.description,
       color_hex: e.color_hex,
@@ -20,6 +21,7 @@ const tagBaseSchema = z.object({
 })
 
 export const tagSchema = tagBaseSchema.extend({
+  id: idSchema,
   created_at: z.date()
 })
 

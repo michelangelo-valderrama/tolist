@@ -9,8 +9,8 @@ export async function addTag(tagCreate: TagCreate): Promise<Tag> {
   return Tag.new(tag)
 }
 
-export async function getTag(name: string): Promise<Tag> {
-  const tag = await TagModel.findOne({ name: name }).lean().exec()
+export async function getTag(tagId: string): Promise<Tag> {
+  const tag = await TagModel.findById(tagId).lean().exec()
   if (!tag) {
     throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Tag not found')
   }
@@ -22,27 +22,25 @@ export async function findByCreator(creatorId: string): Promise<Tag[]> {
   return tags.map(Tag.new)
 }
 
-export async function findByNames(names: string[]): Promise<Tag[]> {
-  const tags = await TagModel.find({ name: { $in: names } })
+export async function findByIds(tagsIds: string[]): Promise<Tag[]> {
+  const tags = await TagModel.find({ _id: { $in: tagsIds } })
     .lean()
     .exec()
   return tags.map(Tag.new)
 }
 
-export async function tagExists(name: string): Promise<boolean> {
-  const tag = await TagModel.findOne({ name: name }).lean().exec()
+export async function tagExists(tagId: string): Promise<boolean> {
+  const tag = await TagModel.findById(tagId).lean().exec()
   return !!tag
 }
 
-export async function deleteTag(name: string): Promise<void> {
-  const tag = await TagModel.findOne({
-    name: name
-  }).exec()
+export async function deleteTag(tagId: string): Promise<void> {
+  const tag = await TagModel.findById(tagId).exec()
   if (!tag) {
     throw new ApiError(HTTP_STATUS.NOT_FOUND_404, 'Tag not found')
   }
   await Promise.all([
-    tasksService.deleteTagFromTasks(name),
+    tasksService.deleteTagFromTasks(tagId),
     tag.deleteOne().exec()
   ])
 }
