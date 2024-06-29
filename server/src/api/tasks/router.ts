@@ -13,28 +13,28 @@ router.use(authenticateReq())
 router.get('/', asyncHandler(tasksController.findByCreator))
 router.get('/:taskId', asyncHandler(tasksController.getTask))
 router.post(
-	'/',
-	validateReq(
-		z.object({
-			body: tasksSchemas.taskCreatePublicSchema
-		})
-	),
-	asyncHandler(tasksController.addTask)
+  '/',
+  validateReq(
+    z.object({
+      body: tasksSchemas.taskCreatePublicSchema
+    })
+  ),
+  asyncHandler(tasksController.addTask)
 )
 router.patch(
-	'/:taskId',
-	validateReq(
-		z.object({
-			params: z.object({ taskId: idSchema }),
-			body: tasksSchemas.taskUpdateSchema
-		})
-	),
-	asyncHandler(tasksController.updateTask)
+  '/:taskId',
+  validateReq(
+    z.object({
+      params: z.object({ taskId: idSchema }),
+      body: tasksSchemas.taskUpdateSchema
+    })
+  ),
+  asyncHandler(tasksController.updateTask)
 )
 router.delete(
-	'/:taskId',
-	validateReq(z.object({ params: z.object({ taskId: idSchema }) })),
-	asyncHandler(tasksController.deleteTask)
+  '/:taskId',
+  validateReq(z.object({ params: z.object({ taskId: idSchema }) })),
+  asyncHandler(tasksController.deleteTask)
 )
 
 export default router
