@@ -17,15 +17,30 @@ export const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline'
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3 text-xs',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'size-10'
+        default: 'h-9 px-4 py-2',
+        sm: 'h-8 rounded-md px-3 text-xs',
+        lg: 'h-10 rounded-md px-8',
+        icon: 'size-9'
       }
     },
     defaultVariants: {
       variant: 'default',
       size: 'default'
+    }
+  }
+)
+
+export const inputVariants = cva(
+  'flex h-10 w-full rounded-md border border-input bg-muted/40 px-5 py-1.5 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        default: '',
+        icon: 'pl-10'
+      }
+    },
+    defaultVariants: {
+      variant: 'default'
     }
   }
 )
