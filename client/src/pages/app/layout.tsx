@@ -4,7 +4,7 @@ import { Nav } from '@/components/nav'
 
 export default function AppLayout() {
   return (
-    <main className="h-svh overflow-hidden">
+    <main className="w-dvw h-dvh overflow-hidden">
       <AmbientColor />
       <div className="h-full flex z-10 relative">
         <Nav />
