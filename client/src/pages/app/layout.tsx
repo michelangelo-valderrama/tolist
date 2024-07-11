@@ -4,7 +4,10 @@ import { Nav } from '@/components/nav'
 
 export default function AppLayout() {
   return (
-    <main className="w-dvw h-dvh overflow-hidden">
+    <main
+      className="w-dvw h-dvh overflow-hidden select-none"
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <AmbientColor />
       <div className="h-full flex z-10 relative">
         <Nav />
