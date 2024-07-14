@@ -1,21 +1,19 @@
 import { Outlet } from 'react-router-dom'
-import { AmbientColor } from '@/components/ambient-color'
-import { Nav } from '@/components/nav'
-import { Button } from '@/components/ui/button'
 import { EllipsisVerticalIcon } from 'lucide-react'
-import { TogglePanel } from '@/components/toggle-panel'
 import { useSidebarStore } from '@/stores/sidebar.store'
+import { Button } from '@/components/ui/button'
+import { TogglePanel } from '@/components/toggle-panel'
+import { Nav } from '@/components/nav'
 
 export default function AppLayout() {
   const [$sidebarOpen] = useSidebarStore((s) => [s.open])
 
   return (
     <main
-      className="w-dvw h-dvh overflow-hidden select-none"
+      className="w-dvw h-dvh overflow-hidden select-none relative"
       onContextMenu={(e) => e.preventDefault()}
     >
-      <AmbientColor />
-      <div className="h-full flex z-10 relative">
+      <div className="h-full flex z-10">
         <Nav />
         <div className="flex-1 p-4 pl-0">
           <div className="size-full overflow-y-scroll">

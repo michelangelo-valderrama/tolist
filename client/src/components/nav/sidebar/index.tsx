@@ -24,7 +24,7 @@ export function Sidebar() {
           <div className="relative">
             <Profile
               username="Imagelo"
-              profilePictureUrl="https://avatars.githubusercontent.com/u/135858738"
+              pictureUrl="https://avatars.githubusercontent.com/u/135858738"
             />
             <TogglePanel
               className={`
@@ -37,7 +37,11 @@ export function Sidebar() {
         {/* Nav */}
         <nav className="px-2 mb-5 flex flex-col gap-y-1">
           <div className="relative group">
-            <SidebarItem label="Inbox" icon={InboxIcon} />
+            <SidebarItem
+              url="/app/project/inbox"
+              label="Inbox"
+              icon={InboxIcon}
+            />
             {$sidebarOpen && (
               <SmplTooltip content="Add task" side="right">
                 <Button
@@ -50,7 +54,7 @@ export function Sidebar() {
               </SmplTooltip>
             )}
           </div>
-          <SidebarItem label="Tags" icon={TagsIcon} />
+          <SidebarItem url="/app/tags" label="Tags" icon={TagsIcon} />
         </nav>
         {/* Projects */}
         <div className="flex-1 flex flex-col overflow-auto">
@@ -71,12 +75,14 @@ export function Sidebar() {
                 .fill(null)
                 .map((_, index) => (
                   <Project
+                    id="123"
                     name="Imangelo Blog"
                     pictureUrl="https://imangelo.dev/favicon.svg"
                     key={index}
                   />
                 ))}
               <Project
+                id="123"
                 name="Todoist"
                 pictureUrl="https://todoist.com/static/favicon-32x32.png"
                 undoneTasks={3}
