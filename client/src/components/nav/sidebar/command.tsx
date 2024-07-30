@@ -9,24 +9,24 @@ export function Command() {
   if ($sidebarOpen)
     return (
       <Button
-        className="gap-x-2.5 justify-start w-full border-t border-t-border h-auto p-4 pt-3 rounded-t-none"
+        className="gap-x-2.5 justify-start w-full h-auto p-4 pt-3 rounded-t-none border-t border-t-border"
         aria-label="Open command panel"
         variant="ghosty"
         size="lg"
       >
-        <CommandIcon className="size-5" />
+        <CommandIcon className="size-icon" />
         Command
       </Button>
     )
   return (
     <SmplTooltip content="Command" side="right">
       <Button
-        className="w-full border-t border-t-border h-auto py-4 rounded-t-none"
+        className="w-full h-auto py-4 rounded-t-none px-2 border-t border-t-border"
         aria-label="Open command panel"
         variant="ghosty"
         size="icon"
       >
-        <CommandIcon className="size-5" />
+        <CommandIcon className="size-icon" />
       </Button>
     </SmplTooltip>
   )

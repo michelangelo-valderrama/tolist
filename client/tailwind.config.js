@@ -21,6 +21,11 @@ export default {
       }
     },
     extend: {
+      spacing: {
+        icon: 'var(--icon-size)',
+        'tool-icon': 'var(--tool-icon-size)',
+        bullet: 'var(--bullet-size)'
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

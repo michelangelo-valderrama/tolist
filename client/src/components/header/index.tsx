@@ -62,7 +62,7 @@ export function Header() {
         </Breadcrumb>
       </div>
       <Button size="icon" variant="ghost" className="hover:bg-transparent">
-        <EllipsisVerticalIcon className="size-5" />
+        <EllipsisVerticalIcon className="size-icon" />
       </Button>
     </header>
   )

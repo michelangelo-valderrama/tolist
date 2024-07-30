@@ -16,7 +16,7 @@ export function Sidebar() {
   return (
     <div className="h-full p-4">
       <div
-        className="relative z-10 h-full bg-sidebar/80 backdrop-blur-sm border rounded-md shadow-black/20 shadow-lg flex flex-col w-16 data-[sidebar-open=true]:w-80"
+        className="relative z-10 h-full bg-sidebar/80 backdrop-blur-sm border rounded-md shadow-black/20 shadow-lg flex flex-col w-16 data-[sidebar-open=true]:w-80 transition-all"
         data-sidebar-open={$sidebarOpen}
       >
         {/* Profile */}
@@ -49,7 +49,7 @@ export function Sidebar() {
                   variant="aside"
                   className="opacity-0 focus:opacity-100 group-hover:opacity-100 absolute top-1/2 -translate-y-1/2 right-0.5"
                 >
-                  <PlusIcon className="size-5" />
+                  <PlusIcon className="size-icon" />
                 </Button>
               </SmplTooltip>
             )}
@@ -65,7 +65,7 @@ export function Sidebar() {
                 variant="ghost"
                 className="text-muted-foreground hover:bg-transparent"
               >
-                <PlusIcon className="size-5" />
+                <PlusIcon className="size-icon" />
               </Button>
             </SmplTooltip>
           </Section>
@@ -91,9 +91,7 @@ export function Sidebar() {
           </ScrollArea>
         </div>
         {/* Command Panel */}
-        <div>
-          <Command />
-        </div>
+        <Command />
       </div>
     </div>
   )

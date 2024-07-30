@@ -24,9 +24,9 @@ export function TogglePanel(props: ButtonProps) {
           {...props}
         >
           {$sidebarOpen ? (
-            <PanelRightOpenIcon className="size-5" />
+            <PanelRightOpenIcon className="size-icon" />
           ) : (
-            <PanelRightCloseIcon className="size-5" />
+            <PanelRightCloseIcon className="size-icon" />
           )}
         </Button>
       </TooltipTrigger>

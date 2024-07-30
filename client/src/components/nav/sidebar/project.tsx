@@ -32,7 +32,7 @@ function ProjectContextMenu({ children }: ProjectContextMenuProps) {
         <ContextMenuSeparator />
         <ContextMenuItem>Edit</ContextMenuItem>
         <ContextMenuItem className="text-destructive-think focus:text-destructive-think">
-          <Trash2Icon className="size-4" />
+          <Trash2Icon className="size-tool-icon" />
           Remove
         </ContextMenuItem>
       </ContextMenuContent>
@@ -49,7 +49,7 @@ export function Project({ id, name, pictureUrl, undoneTasks }: Props) {
   return (
     <ProjectContextMenu>
       {$sidebarOpen ? (
-        <Link to={projectUrl}>
+        <Link to={projectUrl} tabIndex={-1}>
           <Button
             className="px-2 w-full justify-between h-12 gap-x-2"
             variant="ghosty"
@@ -62,10 +62,10 @@ export function Project({ id, name, pictureUrl, undoneTasks }: Props) {
                   className="rounded-md object-contain size-full aspect-square"
                 />
               </div>
-              <p className="font-bold">{name}</p>
+              <p className="font-medium">{name}</p>
             </div>
             {undoneTasks && (
-              <span className="size-5 font-medium text-sm rounded-full flex items-center justify-center bg-primary text-primary-foreground">
+              <span className="size-bullet font-semibold text-xs rounded-full flex items-center justify-center bg-primary text-primary-foreground">
                 {undoneTasks}
               </span>
             )}
@@ -73,14 +73,19 @@ export function Project({ id, name, pictureUrl, undoneTasks }: Props) {
         </Link>
       ) : (
         <SmplTooltip content={name} side="right">
-          <Link to={projectUrl}>
-            <Button className="size-12" variant="ghosty" size="icon">
-              <div className="size-8">
+          <Link to={projectUrl} tabIndex={-1}>
+            <Button className="size-12 relative" variant="ghosty" size="icon">
+              <div className="size-9">
                 <img
                   src={pictureUrl}
                   className="rounded-md object-contain size-full aspect-square"
                 />
               </div>
+              {undoneTasks && (
+                <span className="absolute size-bullet border-background border-4 font-semibold text-xs rounded-full flex items-center justify-center bg-primary text-primary-foreground bottom-0 right-0 box-content">
+                  {undoneTasks}
+                </span>
+              )}
             </Button>
           </Link>
         </SmplTooltip>

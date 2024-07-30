@@ -22,14 +22,14 @@ export function SidebarItem({
 
   if ($sidebarOpen)
     return (
-      <Link to={url}>
+      <Link to={url} tabIndex={-1}>
         <Button
           className={cn('px-2 w-full justify-start gap-x-2.5', className)}
           variant="ghosty"
           size="lg"
           {...props}
         >
-          <Icon className="size-5" />
+          <Icon className="size-icon" />
           {label}
           {children}
         </Button>
@@ -37,14 +37,14 @@ export function SidebarItem({
     )
   return (
     <SmplTooltip side="right" content={label}>
-      <Link to={url}>
+      <Link to={url} tabIndex={-1}>
         <Button
           className={cn('size-12', className)}
           variant="ghosty"
           size="icon"
           {...props}
         >
-          <Icon className="size-5" />
+          <Icon className="size-icon" />
           {children}
         </Button>
       </Link>

@@ -12,16 +12,9 @@ export function Profile({ pictureUrl, username, ...props }: Props) {
   const [$sidebarOpen] = useSidebarStore((s) => [s.open])
   const ariaLabel = `Profile for ${username}`
 
-  const UserAvatar = (
-    <Avatar className="rounded-md size-8">
-      <AvatarImage alt={`${username}'s profile picture`} src={pictureUrl} />
-      <AvatarFallback>{username.slice(0, 2)}</AvatarFallback>
-    </Avatar>
-  )
-
   if ($sidebarOpen) {
     return (
-      <Link to="/app/profile">
+      <Link to="/app/profile" tabIndex={-1}>
         <Button
           className="gap-x-3 flex-1 justify-start px-2 h-12 w-full text-foreground overflow-hidden"
           aria-label={ariaLabel}
@@ -29,15 +22,22 @@ export function Profile({ pictureUrl, username, ...props }: Props) {
           size="lg"
           {...props}
         >
-          {UserAvatar}
-          <p className="font-bold text-lg">{username}</p>
+          <Avatar className="rounded-md size-8">
+            <AvatarImage
+              alt={`${username}'s profile picture`}
+              src={pictureUrl}
+            />
+            <AvatarFallback>{username.slice(0, 2)}</AvatarFallback>
+          </Avatar>
+
+          <p className="font-medium text-lg">{username}</p>
         </Button>
       </Link>
     )
   }
 
   return (
-    <Link to="/app/profile">
+    <Link to="/app/profile" tabIndex={-1}>
       <Button
         aria-label={ariaLabel}
         className="size-12"
@@ -45,7 +45,10 @@ export function Profile({ pictureUrl, username, ...props }: Props) {
         size="icon"
         {...props}
       >
-        {UserAvatar}
+        <Avatar className="rounded-md size-9">
+          <AvatarImage alt={`${username}'s profile picture`} src={pictureUrl} />
+          <AvatarFallback>{username.slice(0, 2)}</AvatarFallback>
+        </Avatar>
       </Button>
     </Link>
   )

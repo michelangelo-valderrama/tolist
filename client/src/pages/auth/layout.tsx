@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { Toaster } from '@/components/ui/toaster'
 
 export default function AuthLayout() {
   return (
@@ -9,6 +10,7 @@ export default function AuthLayout() {
           <Outlet />
         </div>
       </div>
+      <Toaster />
     </main>
   )
 }
