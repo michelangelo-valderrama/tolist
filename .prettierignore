@@ -1,0 +1,14 @@
+.github
+*.md
+.docker/
+*.min.js
+*.min.css
+layouts.ts
+node_modules
+css/balloon.css
+_list.json
+backend/logs
+backend/coverage
+dist/
+build/
+frontend/coverage
