@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useBreadcrumbStore } from '@/stores/breadcrumb.store'
+import { Task } from '@/components/task'
 
 export default function ProjectPage() {
   const [$breadcrumbUpdate] = useBreadcrumbStore((s) => [s.update])
@@ -9,8 +10,13 @@ export default function ProjectPage() {
   }, [$breadcrumbUpdate])
 
   return (
-    <div>
-      <p>Project page</p>
+    <div className="max-w-[580px] mx-auto">
+      <div className="flex flex-col mt-10">
+        <Task />
+        <Task />
+        <Task />
+        <Task />
+      </div>
     </div>
   )
 }
