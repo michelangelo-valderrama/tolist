@@ -1,7 +1,7 @@
-name: todo-list
+name: tolist
 services:
   mongodb:
-    container_name: todo-list-db
+    container_name: tolist-db
     image: mongo:7.0.11
     restart: always
     ports:

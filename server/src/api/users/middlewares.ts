@@ -7,24 +7,24 @@ import * as usersService from './service'
 import type { User } from './schemas'
 
 export function verifyCredentials(): RequestHandler {
-	return async (req: ApiTypes.Request, _res: Response, next: NextFunction) => {
-		const { password, email } = req.body
+  return async (req: ApiTypes.Request, _res: Response, next: NextFunction) => {
+    const { password, name } = req.body
 
-		let user: User
-		try {
-			user = await usersService.findByEmail(email)
-		} catch (error) {
-			return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Incorrect email'))
-		}
+    let user: User
+    try {
+      user = await usersService.findByName(name)
+    } catch (error) {
+      return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Incorrect name'))
+    }
 
-		const validPassword = comparePassword(password, user.hashed_password)
-		if (!validPassword) {
-			return next(
-				new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Incorrect password')
-			)
-		}
+    const validPassword = comparePassword(password, user.hashed_password)
+    if (!validPassword) {
+      return next(
+        new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Incorrect password')
+      )
+    }
 
-		req.body.user = user
-		next()
-	}
+    req.body.user = user
+    next()
+  }
 }
