@@ -15,7 +15,7 @@ class ApiError extends Error {
 
     if (isDev()) {
       this.message =
-        stack ?? '' ? `${$message}\nStack: ${stack}` : `${$message}`
+        (stack ?? '') ? `${$message}\nStack: ${stack}` : `${$message}`
     } else {
       // TODO
     }

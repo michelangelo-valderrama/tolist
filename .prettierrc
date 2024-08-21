@@ -3,6 +3,7 @@
   "useTabs": false,
   "htmlWhitespaceSensitivity": "ignore",
   "endOfLine": "lf",
+  "trailingComma": "none",
   "semi": false,
   "singleQuote": true,
   "overrides": [

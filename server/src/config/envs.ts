@@ -14,7 +14,7 @@ const envs = {
   REFRESH_TOKEN_SECRET: get('REFRESH_TOKEN_SECRET').required().asString(),
   REFRESH_TOKEN_EXPIRES_IN: get('REFRESH_TOKEN_EXPIRES_IN')
     .required()
-    .asString(),
+    .asString()
 }
 
 export default envs

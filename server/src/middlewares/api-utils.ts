@@ -6,57 +6,57 @@ import ApiError from '../utils/error'
 import HTTP_STATUS from '../constants/http-status'
 
 type AsyncHandler = (
-	req: ApiTypes.Request,
-	res: Response
+  req: ApiTypes.Request,
+  res: Response
 ) => Promise<ApiResponse>
 
 /**
  * Wraps an async handler to catch errors and send them to the error handler.
  */
 function asyncHandler(handler: AsyncHandler): RequestHandler {
-	return async (req: Request, res: Response, next: NextFunction) => {
-		try {
-			const handlerData = await handler(req, res)
-			return handleApiResponse(handlerData, res)
-		} catch (error) {
-			next(error)
-		}
-	}
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const handlerData = await handler(req, res)
+      return handleApiResponse(handlerData, res)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 type AnyZodObject = z.ZodOptional<z.AnyZodObject> | z.AnyZodObject
 
 type ValidationSchema = z.ZodObject<{
-	body?: AnyZodObject
-	query?: AnyZodObject
-	params?: AnyZodObject
-	headers?: AnyZodObject
+  body?: AnyZodObject
+  query?: AnyZodObject
+  params?: AnyZodObject
+  headers?: AnyZodObject
 }>
 
 /**
  * Validates the request body, query, params, and headers using the provided schema.
  */
 function validateReq(validationSchema: ValidationSchema): RequestHandler {
-	return async (req: ApiTypes.Request, _res: Response, next: NextFunction) => {
-		try {
-			await validationSchema.parseAsync(req)
-		} catch (error) {
-			if (error instanceof z.ZodError) {
-				const errorData = error.issues.map((e) => ({
-					path: e.path.join('.'),
-					message: e.message,
-					expected: (e as any).expected ?? null,
-					received: (e as any).received ?? null
-				}))
-				const errorMessage = 'Invalid request data.'
-				return next(
-					new ApiError(HTTP_STATUS.BAD_REQUEST_400, errorMessage, errorData)
-				)
-			}
-			return next(error)
-		}
-		next()
-	}
+  return async (req: ApiTypes.Request, _res: Response, next: NextFunction) => {
+    try {
+      await validationSchema.parseAsync(req)
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const errorData = error.issues.map((e) => ({
+          path: e.path.join('.'),
+          message: e.message,
+          expected: (e as any).expected ?? null,
+          received: (e as any).received ?? null
+        }))
+        const errorMessage = 'Invalid request data.'
+        return next(
+          new ApiError(HTTP_STATUS.BAD_REQUEST_400, errorMessage, errorData)
+        )
+      }
+      return next(error)
+    }
+    next()
+  }
 }
 
 export { asyncHandler, validateReq }

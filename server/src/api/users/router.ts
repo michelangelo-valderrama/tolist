@@ -9,23 +9,23 @@ import { authenticateReq } from '../../middlewares/auth'
 const router = Router()
 
 router.post(
-	'/signup',
-	validateReq(
-		z.object({
-			body: usersSchemas.userCreatePublicSchema
-		})
-	),
-	asyncHandler(usersController.singup)
+  '/signup',
+  validateReq(
+    z.object({
+      body: usersSchemas.userCreatePublicSchema
+    })
+  ),
+  asyncHandler(usersController.singup)
 )
 router.post(
-	'/login',
-	validateReq(
-		z.object({
-			body: usersSchemas.userLoginSchema
-		})
-	),
-	usersMiddlewares.verifyCredentials(),
-	asyncHandler(usersController.login)
+  '/login',
+  validateReq(
+    z.object({
+      body: usersSchemas.userLoginSchema
+    })
+  ),
+  usersMiddlewares.verifyCredentials(),
+  asyncHandler(usersController.login)
 )
 router.post('/refresh', asyncHandler(usersController.refreshToken))
 router.get('/me', authenticateReq(), asyncHandler(usersController.getMe))

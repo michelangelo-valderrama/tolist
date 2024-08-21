@@ -6,75 +6,75 @@ import { ProjectCreate, ProjectCreatePublic, ProjectUpdate } from './schemas'
 import * as projectsService from './service'
 
 export async function addProject(req: ApiTypes.Request): Promise<ApiResponse> {
-	const userId = req.ctx!.decodedToken.user_id
+  const userId = req.ctx!.decodedToken.user_id
 
-	const projectCreatePublic: ProjectCreatePublic = req.body
-	const projectCreate: ProjectCreate = {
-		...projectCreatePublic,
-		creator: userId
-	}
+  const projectCreatePublic: ProjectCreatePublic = req.body
+  const projectCreate: ProjectCreate = {
+    ...projectCreatePublic,
+    creator: userId
+  }
 
-	await projectsService.projectNameExists(userId, projectCreate.name)
+  await projectsService.projectNameExists(userId, projectCreate.name)
 
-	const project = await projectsService.addProject(projectCreate)
-	return new ApiResponse('Project added', project, HTTP_STATUS.CREATED_201)
+  const project = await projectsService.addProject(projectCreate)
+  return new ApiResponse('Project added', project, HTTP_STATUS.CREATED_201)
 }
 
 export async function findByCreator(
-	req: ApiTypes.Request
+  req: ApiTypes.Request
 ): Promise<ApiResponse> {
-	const userId = req.ctx!.decodedToken.user_id
+  const userId = req.ctx!.decodedToken.user_id
 
-	const projects = await projectsService.findByCreator(userId)
-	return new ApiResponse('Projects retreived', projects)
+  const projects = await projectsService.findByCreator(userId)
+  return new ApiResponse('Projects retreived', projects)
 }
 
 export async function deleteProject(
-	req: ApiTypes.Request
+  req: ApiTypes.Request
 ): Promise<ApiResponse> {
-	const projectId: string = req.params.projectId
+  const projectId: string = req.params.projectId
 
-	const projectPromise = projectsService.deleteProject(projectId)
-	const tasksPromise = tasksService.deleteByProject(projectId)
+  const projectPromise = projectsService.deleteProject(projectId)
+  const tasksPromise = tasksService.deleteByProject(projectId)
 
-	const [project] = await Promise.all([projectPromise, tasksPromise])
+  const [project] = await Promise.all([projectPromise, tasksPromise])
 
-	return new ApiResponse('Project deleted', project)
+  return new ApiResponse('Project deleted', project)
 }
 
 export async function updateProject(
-	req: ApiTypes.Request
+  req: ApiTypes.Request
 ): Promise<ApiResponse> {
-	const userId = req.ctx!.decodedToken.user_id
+  const userId = req.ctx!.decodedToken.user_id
 
-	const projectId = req.params.projectId
-	const projectUpdate: ProjectUpdate = req.body
+  const projectId = req.params.projectId
+  const projectUpdate: ProjectUpdate = req.body
 
-	const project = await projectsService.getProject(projectId)
+  const project = await projectsService.getProject(projectId)
 
-	if (projectUpdate.name && projectUpdate.name !== project.name) {
-		await projectsService.projectNameExists(userId, projectUpdate.name)
-	}
+  if (projectUpdate.name && projectUpdate.name !== project.name) {
+    await projectsService.projectNameExists(userId, projectUpdate.name)
+  }
 
-	const newProject = await projectsService.updateProject(
-		projectId,
-		projectUpdate
-	)
-	return new ApiResponse('Project updated', newProject)
+  const newProject = await projectsService.updateProject(
+    projectId,
+    projectUpdate
+  )
+  return new ApiResponse('Project updated', newProject)
 }
 
 export async function getProject(req: ApiTypes.Request): Promise<ApiResponse> {
-	const projectId = req.params.projectId
+  const projectId = req.params.projectId
 
-	const project = await projectsService.getProject(projectId)
-	return new ApiResponse('Project retreived', project)
+  const project = await projectsService.getProject(projectId)
+  return new ApiResponse('Project retreived', project)
 }
 
 export async function getProjectTasks(
-	req: ApiTypes.Request
+  req: ApiTypes.Request
 ): Promise<ApiResponse> {
-	const projectId = req.params.projectId
+  const projectId = req.params.projectId
 
-	const tasks = await tasksService.findByProject(projectId)
-	return new ApiResponse('Project tasks retreived', tasks)
+  const tasks = await tasksService.findByProject(projectId)
+  return new ApiResponse('Project tasks retreived', tasks)
 }

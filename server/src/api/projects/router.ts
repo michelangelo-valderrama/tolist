@@ -12,50 +12,50 @@ router.use(authenticateReq())
 
 router.get('/', asyncHandler(projectController.findByCreator))
 router.get(
-	'/:projectId',
-	validateReq(
-		z.object({
-			params: z.object({ projectId: idSchema })
-		})
-	),
-	asyncHandler(projectController.getProject)
+  '/:projectId',
+  validateReq(
+    z.object({
+      params: z.object({ projectId: idSchema })
+    })
+  ),
+  asyncHandler(projectController.getProject)
 )
 router.get(
-	'/:projectId/tasks',
-	validateReq(
-		z.object({
-			params: z.object({ projectId: idSchema })
-		})
-	),
-	asyncHandler(projectController.getProjectTasks)
+  '/:projectId/tasks',
+  validateReq(
+    z.object({
+      params: z.object({ projectId: idSchema })
+    })
+  ),
+  asyncHandler(projectController.getProjectTasks)
 )
 router.post(
-	'/',
-	validateReq(
-		z.object({
-			body: projectsSchemas.projectCreatePublicSchema
-		})
-	),
-	asyncHandler(projectController.addProject)
+  '/',
+  validateReq(
+    z.object({
+      body: projectsSchemas.projectCreatePublicSchema
+    })
+  ),
+  asyncHandler(projectController.addProject)
 )
 router.delete(
-	'/:projectId',
-	validateReq(
-		z.object({
-			params: z.object({ projectId: idSchema })
-		})
-	),
-	asyncHandler(projectController.deleteProject)
+  '/:projectId',
+  validateReq(
+    z.object({
+      params: z.object({ projectId: idSchema })
+    })
+  ),
+  asyncHandler(projectController.deleteProject)
 )
 router.patch(
-	'/:projectId',
-	validateReq(
-		z.object({
-			params: z.object({ projectId: idSchema }),
-			body: projectsSchemas.projectUpdateSchema
-		})
-	),
-	asyncHandler(projectController.updateProject)
+  '/:projectId',
+  validateReq(
+    z.object({
+      params: z.object({ projectId: idSchema }),
+      body: projectsSchemas.projectUpdateSchema
+    })
+  ),
+  asyncHandler(projectController.updateProject)
 )
 
 export default router
