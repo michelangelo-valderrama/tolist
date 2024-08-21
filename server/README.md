@@ -1,4 +1,4 @@
-# Neo Todo List <small>Server</small>
+# Tolist Server
 
 ```sh
 nvm use

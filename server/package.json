@@ -3,13 +3,14 @@
   "license": "ISC",
   "version": "1.0.0",
   "private": "true",
-  "type": "module",
   "scripts": {
-    "start:dev": "ts-node-dev --transpile-only --inspect -- ./src/server.ts",
+    "build": "tsc --build",
+    "start": "node ./dist/server.js",
+    "start:dev": "tsnd --transpile-only --inspect -- ./src/server.ts",
     "gen-secret": "openssl rand -hex 32",
-    "db:up": "docker compose -f .docker/compose.db-only.yml up -d",
-    "db:down": "docker compose -f .docker/compose.db-only.yml down",
-    "db:clear": "docker exec -it $DB_NAME mongosh -u $DB_USERNAME -p $DB_PASSWORD --eval 'use $DB_NAME; db.dropDatabase()'",
+    "db:up": "docker compose --env-file .env -f .docker/compose.db-only.yml up -d",
+    "db:down": "docker compose --env-file .env -f .docker/compose.db-only.yml down",
+    "db:clear": "npm run db:down && sudo rm -rf mongo-data && npm run db:up",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -26,6 +27,7 @@
     "mongoose": "8.4.1",
     "pino": "9.1.0",
     "pino-pretty": "11.1.0",
+    "supertest": "7.0.0",
     "zod": "3.23.8"
   },
   "devDependencies": {
@@ -34,7 +36,8 @@
     "@types/cors": "2.8.17",
     "@types/express": "4.17.21",
     "@types/jsonwebtoken": "9.0.6",
-    "@types/node": "20.13.0",
+    "@types/node": "^20.16.1",
+    "@types/supertest": "^6.0.2",
     "ts-node-dev": "2.0.0",
     "typescript": "5.4.5",
     "vitest": "1.6.0"

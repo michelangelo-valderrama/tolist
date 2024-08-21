@@ -12,7 +12,8 @@ const API_ROUTE_MAP = {
   '/projects': projects,
   '/tasks': tasks,
   '/users': users,
-  '/tags': tags
+  '/tags': tags,
+  '/status': asyncHandler(async () => new ApiResponse('ok')),
 }
 
 function addApiRouter(app: Application): void {
@@ -20,9 +21,9 @@ function addApiRouter(app: Application): void {
     '/',
     asyncHandler(async (_req, _res) => {
       return new ApiResponse('ok', {
-        uptime: Date.now() - APP_START_TIME
+        uptime: Date.now() - APP_START_TIME,
       })
-    })
+    }),
   )
 
   Object.keys(API_ROUTE_MAP).forEach((route) => {
