@@ -14,7 +14,7 @@ import ApiError from '../../utils/error'
 import { User, UserCreatePublic } from './schemas'
 import * as usersService from './service'
 
-export async function singup(req: ApiTypes.Request): Promise<ApiResponse> {
+export async function signup(req: ApiTypes.Request): Promise<ApiResponse> {
   const { name, email } = req.body
 
   await usersService.userExists(name, email)

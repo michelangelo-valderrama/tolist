@@ -1,15 +1,32 @@
 import mongoose from 'mongoose'
+import type { ApiTypes } from '../types/api-types'
 import envs from '../config/envs'
 import Logger from '../utils/logger'
 
 async function connect(): Promise<void> {
-  const { DB_URL, DB_NAME, DB_USERNAME, DB_PASSWORD } = envs
+  let dbUrl: string,
+    dbName: string,
+    dbUsername: string | undefined,
+    dbPassword: string | undefined
+
+  const { MODE, DB_NAME, DB_URL, DB_USERNAME, DB_PASSWORD } = envs
+
+  if (MODE === 'test') {
+    console.log('global.__MONGO_URI__', global.__MONGO_URI__)
+    dbUrl = global.__MONGO_URI__
+    dbName = DB_NAME
+  } else {
+    dbUrl = DB_URL
+    dbName = DB_NAME
+    dbUsername = DB_USERNAME
+    dbPassword = DB_PASSWORD
+  }
 
   const connectOptions: mongoose.ConnectOptions = {
-    dbName: DB_NAME,
+    dbName,
     auth: {
-      password: DB_PASSWORD,
-      username: DB_USERNAME
+      password: dbPassword,
+      username: dbUsername
     },
     authSource: 'admin',
     serverSelectionTimeoutMS: 5000
@@ -18,10 +35,9 @@ async function connect(): Promise<void> {
   for (let i = 0; i < 3; i++) {
     try {
       if (i > 0) Logger.warn('Retrying to connect to database...')
-      const data = await mongoose.connect(DB_URL, connectOptions)
-      if (data.connection.readyState === 1) {
-        break
-      }
+
+      const mongooseData = await mongoose.connect(dbUrl, connectOptions)
+      if (mongooseData.connection.readyState === 1) break
     } catch (error) {
       if (i >= 2) {
         Logger.error(error, 'Failed to connect to database')
@@ -35,5 +51,5 @@ function close(): Promise<void> {
   return mongoose.disconnect()
 }
 
-const db = { connect, close }
+const db: ApiTypes.Db = { connect, close }
 export default db

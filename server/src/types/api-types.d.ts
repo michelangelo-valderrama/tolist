@@ -17,4 +17,9 @@ export namespace ApiTypes {
     iat: number
     exp: number
   }
+
+  type Db = {
+    connect: () => void
+    close: () => void
+  }
 }

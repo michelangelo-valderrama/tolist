@@ -15,7 +15,7 @@ router.post(
       body: usersSchemas.userCreatePublicSchema
     })
   ),
-  asyncHandler(usersController.singup)
+  asyncHandler(usersController.signup)
 )
 router.post(
   '/login',
