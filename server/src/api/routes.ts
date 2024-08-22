@@ -5,7 +5,6 @@ import projects from './projects/router'
 import users from './users/router'
 import tasks from './tasks/router'
 import tags from './tags/router'
-import status from './status/router'
 
 const BASE_API_PATH = ''
 const APP_START_TIME = Date.now()
@@ -13,8 +12,7 @@ const API_ROUTE_MAP = {
   '/projects': projects,
   '/tasks': tasks,
   '/users': users,
-  '/tags': tags,
-  '/status': status
+  '/tags': tags
 }
 
 function addApiRouter(app: Application): void {

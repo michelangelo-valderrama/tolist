@@ -4,6 +4,7 @@ export namespace ApiTypes {
   type Request = ExpressRequest & {
     ctx?: { decodedToken: AccessTokenPayload }
   }
+
   interface AccessTokenPayload {
     user_id: string
     secret: string

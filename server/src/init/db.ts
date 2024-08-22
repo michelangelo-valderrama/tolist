@@ -31,8 +31,8 @@ async function connect(): Promise<void> {
   }
 }
 
-async function close(): Promise<void> {
-  await mongoose.disconnect()
+function close(): Promise<void> {
+  return mongoose.disconnect()
 }
 
 const db = { connect, close }

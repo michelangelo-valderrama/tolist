@@ -13,7 +13,7 @@ class ApiError extends Error {
 
     const $message = message?.at(-1)?.includes('.') ? message : message + '.'
 
-    if (isDev()) {
+    if (isDev) {
       this.message =
         (stack ?? '') ? `${$message}\nStack: ${stack}` : `${$message}`
     } else {

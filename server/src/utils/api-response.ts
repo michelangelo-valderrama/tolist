@@ -6,6 +6,7 @@ export class ApiResponse {
   message: string
   data: any
   status: number
+
   constructor(message?: string, data?: any, status = HTTP_STATUS.OK_200) {
     this.message = message ?? 'ok'
     this.data = data ?? null

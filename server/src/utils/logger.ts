@@ -26,8 +26,9 @@ const Logger = {
   warn: (message: string) => logger.warn(message),
   info: (message: string) => logger.info(message),
   success: (message: string) => logger.success(message),
-  db: (event: string, message: string, id?: string) =>
-    logger.info({ event, id }, message)
+  db: (event: string, message: string, id?: string) => {
+    return logger.info({ event, id }, message)
+  }
 }
 
 export default Logger

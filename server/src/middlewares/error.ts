@@ -25,7 +25,7 @@ async function errorHandlingMiddleware(
       apiResponse.message = 'Something went wrong. Please try again later.'
     }
 
-    if (isDev()) {
+    if (isDev) {
       Logger.error(error, 'API error.')
     }
 

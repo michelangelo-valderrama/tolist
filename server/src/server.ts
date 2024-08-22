@@ -17,7 +17,7 @@ async function bootServer(port: number): Promise<Server> {
   }
 
   return app.listen(port, () => {
-    console.log(`Server running on http://127.0.0.1:${port}`)
+    Logger.success(`Server running on http://127.0.0.1:${port}`)
   })
 }
 

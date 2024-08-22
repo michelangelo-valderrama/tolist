@@ -1,9 +1,9 @@
 import type { RequestHandler, Request, Response, NextFunction } from 'express'
+import z from 'zod'
 import type { ApiTypes } from '../types/api-types'
 import { type ApiResponse, handleApiResponse } from '../utils/api-response'
-import z from 'zod'
-import ApiError from '../utils/error'
 import HTTP_STATUS from '../constants/http-status'
+import ApiError from '../utils/error'
 
 type AsyncHandler = (
   req: ApiTypes.Request,
@@ -49,12 +49,14 @@ function validateReq(validationSchema: ValidationSchema): RequestHandler {
           received: (e as any).received ?? null
         }))
         const errorMessage = 'Invalid request data.'
+
         return next(
           new ApiError(HTTP_STATUS.BAD_REQUEST_400, errorMessage, errorData)
         )
       }
       return next(error)
     }
+
     next()
   }
 }
