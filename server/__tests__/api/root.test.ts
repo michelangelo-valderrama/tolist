@@ -4,7 +4,7 @@ import app from '../../src/app'
 
 const mockApp = request(app)
 
-describe('check root', () => {
+describe('Check root', () => {
   it("GET '/' should be ok", async () => {
     const response = await mockApp.get('/').expect(200)
 
@@ -17,5 +17,10 @@ describe('check root', () => {
     expect(response.body.data).toHaveProperty('uptime')
     expect(response.body.data.uptime).toBeTypeOf('number')
     expect(response.body.data.uptime).toBeGreaterThan(0)
+  })
+
+  it('Unkown endpoint', async () => {
+    const response = await mockApp.get('/abc').expect(404)
+    expect(response.text).toBe('Unknown request URL (GET: /abc)')
   })
 })

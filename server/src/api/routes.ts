@@ -1,4 +1,5 @@
 import type { Application } from 'express'
+import HTTP_STATUS from '../constants/http-status'
 import { asyncHandler } from '../middlewares/api-utils'
 import { ApiResponse } from '../utils/api-response'
 import projects from './projects/router'
@@ -31,7 +32,9 @@ function addApiRouter(app: Application): void {
   })
 
   app.use((req, res) => {
-    return res.send(`Unknown request URL (${req.method}: ${req.path})`)
+    return res
+      .status(HTTP_STATUS.NOT_FOUND_404)
+      .send(`Unknown request URL (${req.method}: ${req.path})`)
   })
 }
 

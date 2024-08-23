@@ -56,3 +56,4 @@ export type User = z.infer<typeof userSchema>
 export type UserCreate = z.infer<typeof userCreateSchema>
 export type UserCreatePublic = z.infer<typeof userCreatePublicSchema>
 export type UserPublic = z.infer<typeof userPublicSchema>
+export type userLoginSchema = z.infer<typeof userLoginSchema>

@@ -88,5 +88,5 @@ export async function refreshToken(
 export async function getMe(req: ApiTypes.Request): Promise<ApiResponse> {
   const userId = req.ctx!.decodedToken.user_id
   const user = await usersService.getUser(userId)
-  return new ApiResponse('User retreived', User.public(user))
+  return new ApiResponse('User retrieved', User.public(user))
 }

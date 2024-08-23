@@ -17,11 +17,11 @@ beforeAll(async () => {
   vi.mock('../src/utils/logger', () => ({
     __esModule: true,
     default: {
-      error: console.error,
-      warn: console.warn,
-      info: console.info,
-      success: console.info,
-      db: console.info
+      error: (...data: any[]) => console.error('[ERROR]', ...data),
+      warn: (...data: any[]) => console.warn('[WARN]', ...data),
+      info: (...data: any[]) => console.info('[INFO]', ...data),
+      success: (...data: any[]) => console.info('[SUCCESS]', ...data),
+      db: (...data: any[]) => console.info('[DB]', ...data)
     }
   }))
 })
