@@ -1,6 +1,5 @@
 import { expect, describe, it } from 'vitest'
 import request from 'supertest'
-import { getCookiesFromHeader } from '../tests-utils'
 import app from '../../src/app'
 import * as usersSchemas from '../../src/api/users/schemas'
 import HTTP_STATUS from '../../src/constants/http-status'
@@ -109,14 +108,12 @@ describe('User controller test', async () => {
         name: newUser.name
       })
 
-      const cookies = getCookiesFromHeader(loginRes.get('Set-Cookie'))
       const { data: authData } = loginRes.body
 
       const getMeRes = await mockApp
         .get('/users/me')
         .set({
-          Authorization: 'Bearer ' + authData.accessToken,
-          'Set-Cookie': cookies
+          Authorization: 'Bearer ' + authData.accessToken
         })
         .expect(HTTP_STATUS.OK_200)
 
@@ -124,6 +121,50 @@ describe('User controller test', async () => {
 
       expect(getMeRes.body.message).toBe('User retrieved')
       expect(userData.name).toBe(newUser.name)
+    })
+  })
+
+  describe('token', () => {
+    it('corrent refresh token', async () => {
+      await mockApp.post('/users/signup').send(newUser)
+
+      const loginRes = await mockApp.post('/users/login').send({
+        password: newUser.password,
+        name: newUser.name
+      })
+
+      const { data: authData } = loginRes.body
+
+      const refreshRes = await mockApp
+        .post('/users/refresh')
+        .set({
+          Authorization: 'Bearer ' + authData.accessToken,
+          Cookie: loginRes.get('Set-Cookie')
+        })
+        .expect('Set-Cookie', /refreshToken/)
+        .expect(HTTP_STATUS.OK_200)
+
+      const { data: refreshData } = refreshRes.body
+
+      expect(refreshData.accessToken).toBeTypeOf('string')
+
+      // with invalid tokens
+      await mockApp
+        .get('/users/me')
+        .set({
+          Authorization: 'Bearer ' + authData.accessToken,
+          Cookie: loginRes.get('Set-Cookie')
+        })
+        .expect(HTTP_STATUS.UNAUTHORIZED_401)
+
+      // with valid tokens
+      await mockApp
+        .get('/users/me')
+        .set({
+          Authorization: 'Bearer ' + refreshData.accessToken,
+          Cookie: refreshRes.get('Set-Cookie')
+        })
+        .expect(HTTP_STATUS.OK_200)
     })
   })
 })
