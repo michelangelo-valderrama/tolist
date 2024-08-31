@@ -1,4 +1,4 @@
-import z from 'zod'
+import projectsSchemas from 'zod'
 import { hashPassword } from '../../utils/auth'
 import { idSchema } from '../../schemas/db'
 
@@ -21,25 +21,25 @@ export const User = {
     })
 }
 
-const userBaseSchema = z.object({
-  name: z.string().min(2).max(50),
-  email: z.string().email()
+const userBaseSchema = projectsSchemas.object({
+  name: projectsSchemas.string().min(2).max(50),
+  email: projectsSchemas.string().email()
 })
 
 export const userSchema = userBaseSchema.extend({
   id: idSchema,
-  hashed_password: z.string(),
-  secret: z.string().nullish(),
-  updated_at: z.date(),
-  created_at: z.date()
+  hashed_password: projectsSchemas.string(),
+  secret: projectsSchemas.string().nullish(),
+  updated_at: projectsSchemas.date(),
+  created_at: projectsSchemas.date()
 })
 
 export const userCreateSchema = userBaseSchema.extend({
-  hashed_password: z.string()
+  hashed_password: projectsSchemas.string()
 })
 
 export const userCreatePublicSchema = userBaseSchema.extend({
-  password: z.string().min(6).max(50)
+  password: projectsSchemas.string().min(6).max(50)
 })
 
 export const userPublicSchema = userSchema.omit({
@@ -52,8 +52,10 @@ export const userLoginSchema = userCreatePublicSchema.pick({
   password: true
 })
 
-export type User = z.infer<typeof userSchema>
-export type UserCreate = z.infer<typeof userCreateSchema>
-export type UserCreatePublic = z.infer<typeof userCreatePublicSchema>
-export type UserPublic = z.infer<typeof userPublicSchema>
-export type userLoginSchema = z.infer<typeof userLoginSchema>
+export type User = projectsSchemas.infer<typeof userSchema>
+export type UserCreate = projectsSchemas.infer<typeof userCreateSchema>
+export type UserCreatePublic = projectsSchemas.infer<
+  typeof userCreatePublicSchema
+>
+export type UserPublic = projectsSchemas.infer<typeof userPublicSchema>
+export type userLoginSchema = projectsSchemas.infer<typeof userLoginSchema>

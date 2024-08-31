@@ -79,6 +79,32 @@ describe('User controller test', () => {
         `User email '${newUser.email}' already exists.`
       )
     })
+
+    it('reject user with invalid email', async () => {
+      await mockApp.post('/users/signup').send(newUser)
+
+      const res = await mockApp
+        .post('/users/signup')
+        .send({
+          ...newUser,
+          email: 'invalid_email'
+        })
+        .expect(HTTP_STATUS.BAD_REQUEST_400)
+
+      expect(res.body).toEqual({
+        message: 'Invalid request data.',
+        data: {
+          error: [
+            {
+              path: 'body.email',
+              message: 'Invalid email',
+              expected: null,
+              received: null
+            }
+          ]
+        }
+      })
+    })
   })
 
   describe('login', async () => {

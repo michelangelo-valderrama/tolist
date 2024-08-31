@@ -17,7 +17,7 @@ class ApiError extends Error {
       this.message =
         (stack ?? '') ? `${$message}\nStack: ${stack}` : `${$message}`
     } else {
-      // TODO
+      this.message = $message
     }
   }
 }
