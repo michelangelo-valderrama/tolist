@@ -26,9 +26,9 @@ function authenticateReq() {
       return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Invalid token'))
     }
 
-    const user = await usersService.getUser(decodedToken.user_id)
+    const userSecret = await usersService.getSecret(decodedToken.user_id)
 
-    if (decodedToken.secret !== user.secret) {
+    if (decodedToken.secret !== userSecret) {
       return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Invalid token'))
     }
 
