@@ -1,11 +1,12 @@
 import { expect, describe, it, vi, afterEach } from 'vitest'
+import { ObjectId } from 'mongodb'
 import * as usersService from '../../../src/api/users/service'
 import * as projectsService from '../../../src/api/projects/service'
 import * as usersSchemas from '../../../src/api/users/schemas'
 import { hashPassword } from '../../../src/utils/auth'
 import { createUser } from '../../__test-data__/users'
 
-const RANDOM_OBJECT_ID = '507f1f77bcf86cd799439011'
+const RANDOM_OBJECT_ID = new ObjectId().toHexString()
 
 describe('User service test', () => {
   describe('add user', async () => {

@@ -63,6 +63,26 @@ describe('User controller test', () => {
       )
     })
 
+    it('reject user with long name', async () => {
+      await mockApp
+        .post('/users/signup')
+        .send({
+          ...newUser,
+          name: '#'.repeat(21)
+        })
+        .expect(HTTP_STATUS.BAD_REQUEST_400)
+    })
+
+    it('reject user with long password', async () => {
+      await mockApp
+        .post('/users/signup')
+        .send({
+          ...newUser,
+          password: '#'.repeat(51)
+        })
+        .expect(HTTP_STATUS.BAD_REQUEST_400)
+    })
+
     it('reject user with duplicate email', async () => {
       await mockApp.post('/users/signup').send(newUser)
 

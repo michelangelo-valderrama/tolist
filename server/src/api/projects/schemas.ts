@@ -10,7 +10,8 @@ export const Project = {
       color_hex: e.color_hex,
       picture_url: e.picture_url,
       creator: e.creator,
-      created_at: e.created_at
+      created_at: e.created_at,
+      updated_at: e.updated_at
     })
 }
 
@@ -24,7 +25,8 @@ const projectBaseSchema = z.object({
 export const projectSchema = projectBaseSchema.extend({
   id: idSchema,
   creator: idSchema,
-  created_at: z.date()
+  created_at: z.date(),
+  updated_at: z.date()
 })
 
 export const projectCreateSchema = projectBaseSchema.extend({

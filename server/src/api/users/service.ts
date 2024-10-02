@@ -67,9 +67,9 @@ export async function userExists(name: string, email: string): Promise<void> {
   }
 }
 
-export async function getSecret(userId: string): Promise<string | null> {
+export async function getSecret(userId: string): Promise<string> {
   const user = await UserModel.findById(userId).select('secret').lean().exec()
-  return user?.secret ?? null
+  return user?.secret ?? ''
 }
 
 export async function updateSecret(

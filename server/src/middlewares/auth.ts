@@ -20,19 +20,26 @@ function authenticateReq() {
     }
 
     let decodedToken: ApiTypes.AccessTokenPayload
+
     try {
-      decodedToken = verifyAccessToken(token)
+      decodedToken = await verifyAccessToken(token)
+      console.log('decodedToken', decodedToken)
     } catch (error) {
-      return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Invalid token'))
+      return next(
+        new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Invalid access token')
+      )
     }
 
     const userSecret = await usersService.getSecret(decodedToken.user_id)
 
-    if (decodedToken.secret !== userSecret) {
-      return next(new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Invalid token'))
+    if (decodedToken.secret != userSecret) {
+      return next(
+        new ApiError(HTTP_STATUS.UNAUTHORIZED_401, 'Invalid secret token')
+      )
     }
 
     req.ctx = { decodedToken }
+
     next()
   }
 }
