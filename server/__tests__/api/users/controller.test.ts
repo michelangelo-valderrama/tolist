@@ -68,7 +68,7 @@ describe('User controller test', () => {
         .post('/users/signup')
         .send({
           ...newUser,
-          name: '#'.repeat(21)
+          name: '#'.repeat(41)
         })
         .expect(HTTP_STATUS.BAD_REQUEST_400)
     })

@@ -2,7 +2,7 @@ import { afterAll, beforeAll, afterEach, vi } from 'vitest'
 import mongoose from 'mongoose'
 import * as MongoDbMock from 'vitest-mongodb'
 
-const collectionsForCleanUp = ['users']
+const collectionsForCleanUp = ['users', 'projects']
 
 beforeAll(async () => {
   await MongoDbMock.setup()
@@ -30,7 +30,7 @@ afterEach(async () => {
   if (globalThis.__MONGO_URI__) {
     await Promise.all(
       collectionsForCleanUp.map((collection) => {
-        return mongoose.connection.db.collection(collection).deleteMany()
+        return mongoose.connection.db?.collection(collection).deleteMany()
       })
     )
   }
@@ -40,6 +40,8 @@ afterAll(async () => {
   await mongoose.connection.dropDatabase()
   await mongoose.disconnect()
   await MongoDbMock.teardown()
+
+  for (let model in mongoose.models) delete mongoose.models[model]
 
   vi.resetAllMocks()
 })

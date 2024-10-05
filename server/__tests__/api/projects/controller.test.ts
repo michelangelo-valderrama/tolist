@@ -1,17 +1,10 @@
-import {
-  expect,
-  describe,
-  it,
-  vi,
-  afterEach,
-  beforeAll,
-  beforeEach
-} from 'vitest'
+import { expect, describe, it, vi, beforeEach } from 'vitest'
 import request from 'supertest'
 import { ObjectId } from 'mongodb'
 import app from '../../../src/app'
 import * as projectsSchemas from '../../../src/api/projects/schemas'
 import * as projectsService from '../../../src/api/projects/service'
+import * as tasksService from '../../../src/api/tasks/service'
 import HTTP_STATUS from '../../../src/constants/http-status'
 import * as AuthUtils from '../../../src/utils/auth'
 import { ApiTypes } from '../../../src/types/api-types'
@@ -46,7 +39,7 @@ describe('Project controller test', () => {
     verifyAccessTokenMock.mockResolvedValue(mockDecodedToken)
   })
 
-  describe('create project', () => {
+  describe('create projects', () => {
     const addProjectMock = vi.spyOn(projectsService, 'addProject')
 
     it('correct project creation', async () => {
@@ -129,7 +122,7 @@ describe('Project controller test', () => {
 
     it('not found', async () => {
       await mockApp
-        .get('/projects/' + new ObjectId().toHexString())
+        .get('/projects/' + new ObjectId())
         .set('Authorization', 'Bearer 123')
         .expect(HTTP_STATUS.NOT_FOUND_404)
     })
@@ -148,16 +141,38 @@ describe('Project controller test', () => {
         user_id: new ObjectId().toHexString()
       })
 
-      console.log('projectCreated', projectCreated)
-
       await mockApp
         .get('/projects/' + projectCreated.id)
         .set('Authorization', 'Bearer 321')
         .expect(HTTP_STATUS.OK_200)
     })
+
+    it('get project tasks', async () => {
+      const updateProjectMock = vi.spyOn(tasksService, 'findByProject')
+
+      const createRes = await mockApp
+        .post('/projects')
+        .set('Authorization', 'Bearer 123')
+        .send(newProject)
+        .expect(HTTP_STATUS.CREATED_201)
+
+      const { data: projectCreated } = createRes.body
+
+      const getTasksRes = await mockApp
+        .get('/projects/' + projectCreated.id + '/tasks')
+        .set('Authorization', 'Bearer 123')
+        .expect(HTTP_STATUS.OK_200)
+
+      expect(updateProjectMock).toHaveBeenCalledTimes(1)
+      expect(updateProjectMock).toHaveBeenCalledWith(projectCreated.id)
+
+      const { data: projectTasksRetrived } = getTasksRes.body
+
+      expect(projectTasksRetrived).toEqual([])
+    })
   })
 
-  describe('update project', () => {
+  describe('update projects', () => {
     it('correct project update', async () => {
       const updateProjectMock = vi.spyOn(projectsService, 'updateProject')
       const projectNameExistsMock = vi.spyOn(
@@ -219,6 +234,53 @@ describe('Project controller test', () => {
         .patch('/projects/' + projectCreated.id)
         .set('Authorization', 'Bearer 321')
         .send({ name: 'New name' })
+        .expect(HTTP_STATUS.FORBIDDEN_403)
+    })
+  })
+
+  describe('delete projects', () => {
+    const deleteProjectMock = vi.spyOn(projectsService, 'deleteProject')
+
+    it('delete project by id', async () => {
+      const res = await mockApp
+        .post('/projects')
+        .set('Authorization', 'Bearer 123')
+        .send(newProject)
+
+      const { data: projectCreated } = res.body
+
+      await mockApp
+        .delete('/projects/' + projectCreated.id)
+        .set('Authorization', 'Bearer 123')
+        .expect(HTTP_STATUS.OK_200)
+
+      expect(deleteProjectMock).toHaveBeenCalledTimes(1)
+      expect(deleteProjectMock).toHaveBeenCalledWith(projectCreated.id)
+    })
+
+    it('not found', async () => {
+      await mockApp
+        .delete('/projects/' + new ObjectId())
+        .set('Authorization', 'Bearer 123')
+        .expect(HTTP_STATUS.NOT_FOUND_404)
+    })
+
+    it('project is not mine', async () => {
+      const res = await mockApp
+        .post('/projects')
+        .set('Authorization', 'Bearer 123')
+        .send(newProject)
+
+      const { data: projectCreated } = res.body
+
+      vi.spyOn(AuthUtils, 'verifyAccessToken').mockResolvedValueOnce({
+        ...mockDecodedToken,
+        user_id: new ObjectId().toHexString()
+      })
+
+      await mockApp
+        .delete('/projects/' + projectCreated.id)
+        .set('Authorization', 'Bearer 321')
         .expect(HTTP_STATUS.FORBIDDEN_403)
     })
   })

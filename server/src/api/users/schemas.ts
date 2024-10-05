@@ -22,7 +22,7 @@ export const User = {
 }
 
 const userBaseSchema = projectsSchemas.object({
-  name: projectsSchemas.string().min(2).max(20),
+  name: projectsSchemas.string().min(2).max(40),
   email: projectsSchemas.string().email()
 })
 
