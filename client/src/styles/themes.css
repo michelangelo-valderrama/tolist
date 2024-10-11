@@ -1,0 +1,54 @@
+:root {
+  --tl-background: theme(colors.zinc.950);
+  --tl-foreground: theme(colors.zinc.50);
+
+  --tl-primary: theme(colors.zinc.50);
+  --tl-primary-shade: theme(colors.zinc.200);
+  --tl-primary-tint: theme(colors.white);
+  --tl-primary-contrast: theme(colors.zinc.950);
+
+  --tl-secondary: theme(colors.zinc.950);
+  --tl-secondary-shade: theme(colors.zinc.50);
+  --tl-secondary-tint: theme(colors.zinc.50);
+  --tl-secondary-contrast: theme(colors.zinc.50);
+
+  --tl-tertiary: theme(colors.zinc.950);
+  --tl-tertiary-shade: theme(colors.zinc.50);
+  --tl-tertiary-tint: theme(colors.zinc.50);
+  --tl-tertiary-contrast: theme(colors.zinc.50);
+
+  --tl-sidebar: theme(colors.zinc.950);
+  --tl-sidebar-contrast: theme(colors.zinc.50);
+
+  --tl-muted: theme(colors.zinc.950);
+  --tl-muted-shade: theme(colors.zinc.50);
+  --tl-muted-tint: theme(colors.zinc.50);
+  --tl-muted-contrast: theme(colors.zinc.50);
+
+  --tl-accent: theme(colors.zinc.950);
+  --tl-accent-shade: theme(colors.zinc.50);
+  --tl-accent-tint: theme(colors.zinc.50);
+  --tl-accent-contrast: theme(colors.zinc.50);
+
+  --tl-popover: theme(colors.zinc.950);
+  --tl-popover-shade: theme(colors.zinc.50);
+  --tl-popover-tint: theme(colors.zinc.50);
+  --tl-popover-contrast: theme(colors.zinc.50);
+
+  --tl-warning: theme(colors.zinc.950);
+  --tl-warning-shade: theme(colors.zinc.50);
+  --tl-warning-tint: theme(colors.zinc.50);
+  --tl-warning-contrast: theme(colors.zinc.50);
+
+  --tl-danger: theme(colors.zinc.950);
+  --tl-danger-shade: theme(colors.zinc.50);
+  --tl-danger-tint: theme(colors.zinc.50);
+  --tl-danger-contrast: theme(colors.zinc.50);
+
+  --tl-border: theme(colors.zinc.950);
+  --tl-input: theme(colors.zinc.950);
+
+  --tl-ring: theme(colors.zinc.200);
+
+  --tl-border-radius: 0.5rem;
+}
